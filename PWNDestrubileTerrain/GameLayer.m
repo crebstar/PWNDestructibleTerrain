@@ -67,6 +67,7 @@
         
         //Add miners
         for (int i=0;i<MINERS_COUNT;i++) {
+            CCLOG(@"Adding miner.png as texture for CCSprite");
             CCSprite *miner=[CCSprite spriteWithFile:@"miner.png"];
             miner.position=ccp(20+(size.width-40)*((float)i+1.0f)/((float)(MINERS_COUNT+1)),size.height-60);
             [self addChild:miner];
