@@ -163,7 +163,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3FF9B0B2175A86A700C71ED8 /* PWNDestrubileTerrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PWNDestrubileTerrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PWNDestructibleTerrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3FF9B0B7175A86A700C71ED8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		3FF9B0B9175A86A700C71ED8 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -490,7 +490,7 @@
 		3FF9B0B3175A86A700C71ED8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3FF9B0B2175A86A700C71ED8 /* PWNDestrubileTerrain.app */,
+				3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */,
 				3FF9B268175A8A4400C71ED8 /* libcocos2d-lib.a */,
 			);
 			name = Products;
@@ -968,9 +968,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3FF9B0B1175A86A700C71ED8 /* PWNDestrubileTerrain */ = {
+		3FF9B0B1175A86A700C71ED8 /* PWNDestructibleTerrain */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3FF9B24A175A86AA00C71ED8 /* Build configuration list for PBXNativeTarget "PWNDestrubileTerrain" */;
+			buildConfigurationList = 3FF9B24A175A86AA00C71ED8 /* Build configuration list for PBXNativeTarget "PWNDestructibleTerrain" */;
 			buildPhases = (
 				3FF9B0AE175A86A700C71ED8 /* Sources */,
 				3FF9B0AF175A86A700C71ED8 /* Frameworks */,
@@ -980,9 +980,9 @@
 			);
 			dependencies = (
 			);
-			name = PWNDestrubileTerrain;
+			name = PWNDestructibleTerrain;
 			productName = PWNDestrubileTerrain;
-			productReference = 3FF9B0B2175A86A700C71ED8 /* PWNDestrubileTerrain.app */;
+			productReference = 3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3FF9B267175A8A4400C71ED8 /* cocos2d-lib */ = {
@@ -1010,7 +1010,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = 3FF9B0AD175A86A700C71ED8 /* Build configuration list for PBXProject "PWNDestrubileTerrain" */;
+			buildConfigurationList = 3FF9B0AD175A86A700C71ED8 /* Build configuration list for PBXProject "PWNDestructibleTerrain" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1022,7 +1022,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3FF9B0B1175A86A700C71ED8 /* PWNDestrubileTerrain */,
+				3FF9B0B1175A86A700C71ED8 /* PWNDestructibleTerrain */,
 				3FF9B267175A8A4400C71ED8 /* cocos2d-lib */,
 			);
 		};
@@ -1240,7 +1240,7 @@
 					"-lz",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PWNDestructibleTerrain;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1260,7 +1260,7 @@
 					"-lz",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PWNDestructibleTerrain;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1324,7 +1324,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3FF9B0AD175A86A700C71ED8 /* Build configuration list for PBXProject "PWNDestrubileTerrain" */ = {
+		3FF9B0AD175A86A700C71ED8 /* Build configuration list for PBXProject "PWNDestructibleTerrain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3FF9B248175A86AA00C71ED8 /* Debug */,
@@ -1333,7 +1333,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3FF9B24A175A86AA00C71ED8 /* Build configuration list for PBXNativeTarget "PWNDestrubileTerrain" */ = {
+		3FF9B24A175A86AA00C71ED8 /* Build configuration list for PBXNativeTarget "PWNDestructibleTerrain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3FF9B24B175A86AA00C71ED8 /* Debug */,
