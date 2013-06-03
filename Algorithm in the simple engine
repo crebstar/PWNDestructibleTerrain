@@ -1,0 +1,16 @@
+Algorithm in the simple engine
+===============================
+
+*** Steps for simple ground creation **
+Important to note the current engine only has a working demo for iPhone Non Retina
+
+1) A UIImage with the image used for the sprite is created and then added to the CCMutableTexture2D (Extends Texture 2D)
+	Note :: Very important fact that CCMutableTexture2D does NOT extend CCNode
+
+2) A CCSprite is then created with the factory method 'spriteWithTexture' accepting an instance of CCMutableTexture2D 
+3) Each ground sprite image is 160 by 60 and is scaled to be 2x in order to simplify calculations and maintain a 60 FPS
+
+4) The first ground sprite is rendered at the top and the rest built relatively off the one above it
+
+
+*** Steps for collision detection ***

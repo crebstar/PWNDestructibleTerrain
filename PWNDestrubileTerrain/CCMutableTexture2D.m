@@ -317,6 +317,8 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 				break;
 		}
         
+        
+        
 		maxS_ = size_.width / (float)width_;
 		maxT_ = size_.height / (float)height_;
         
@@ -491,11 +493,13 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 			pixelGLushort[offset] = colorGLushort;
 		}
 	} else if (pixelGLubyte!=0) {
-		for (int offset=offsetStart;offset<=offsetEnd;offset++) {
+		for (int offset = offsetStart; offset <= offsetEnd; offset++) {
 			pixelGLubyte[offset] = colorGLubyte;
 		}
 	}
 }
+
+// TODO :: Create drawVertical line method (crebstar)
 
 - (void) fillConvexPolygon:(CGPoint*)p :(int)n withColor:(ccColor4B)c {
 	int *yOrderedIdx = calloc( sizeof(int) * n, 1 );
