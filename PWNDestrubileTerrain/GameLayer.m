@@ -25,6 +25,7 @@
 -(void)appendNewGround;
 -(void)resetGroundColors;
 -(void)editTerrain;
+-(void)addRedAlphaTerrain;
 @end
 
 // GameLayer implementation
@@ -63,7 +64,8 @@
         
         [self appendNewGround];
         [self appendNewGround];
-        [self appendNewGround]; // BOTTOM OF SCREEN
+        //[self appendNewGround]; // BOTTOM OF SCREEN
+        [self addRedAlphaTerrain];
         
         [self editTerrain];
         
@@ -331,13 +333,18 @@
             sprite.color=ccc3(255, 130, 110);
         }
 #endif
+        // sprite = groundSprite
         
-        CGPoint local=ccp(currentPoint.x/GROUND_SCALE, (currentPoint.y-sprite.position.y)/GROUND_SCALE + sprite.contentSize.height/2);
-        local.y=sprite.contentSize.height-local.y;
+        // CURRENT TOUCH POINT
+        // These contentSize.height/2 calculations aren't needed if we use anchor point of 0,0
+        CGPoint local = ccp(currentPoint.x, (currentPoint.y - sprite.position.y) + sprite.contentSize.height/2);
+        local.y = sprite.contentSize.height-local.y;
         
-        CGPoint activeLocal=ccp(startPoint.x/GROUND_SCALE,(startPoint.y-sprite.position.y)/GROUND_SCALE + sprite.contentSize.height/2);
-        activeLocal.y=sprite.contentSize.height-activeLocal.y;
+        // START TOUCH POINT
+        CGPoint activeLocal = ccp(startPoint.x , (startPoint.y - sprite.position.y) + sprite.contentSize.height/2);
+        activeLocal.y = sprite.contentSize.height-activeLocal.y;
         
+        // Draw line with width (currentColor has an alpha value of 0)
         CCMutableTexture2D* groundMutableTexture=(CCMutableTexture2D*)(sprite.texture);
         [groundMutableTexture drawLineFrom:activeLocal to:local withLineWidth:DRAW_WIDTH andColor:currentColor];
         [groundMutableTexture apply]; //Redraw texture
@@ -359,6 +366,7 @@
 
 -(void)editTerrain {
     
+    // Reference
     // ccColor4B pixel = [groundMutableTexture pixelAt:ccp( (int) (minerPosition.x/GROUND_SCALE), (int) (((sprite.position.y + groundHeight * 0.5f) - minerPosition.y)/GROUND_SCALE))];
     
     CCSprite * groundSprite = [grounds objectAtIndex:1]; // 2nd from top
@@ -366,13 +374,46 @@
     CCMutableTexture2D * tex = (CCMutableTexture2D*) [groundSprite texture];
     currentColor=ccc4(0,0,0,0); //Transparent >> Draw holes (dig)
     
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 160; i++) {
         
-        [tex drawHorizontalLine:0 :100 :i withColor:currentColor];
+        //[tex drawHorizontalLine:0 :100 :i withColor:currentColor];
+        [tex drawVerticalLine:0 endY:60.0f atX:i withColor:currentColor];
     }
     
     [tex apply];
     
 } // end editTerrain
+
+
+-(void)addRedAlphaTerrain {
+    
+    UIImage * textureImage = [UIImage imageNamed:@"alphatest.png"];
+    CCMutableTexture2D * mutText = [CCMutableTexture2D textureWithImage:textureImage];
+    [mutText setAliasTexParameters];
+    CCSprite * redTerrain = [CCSprite spriteWithTexture:mutText];
+    
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    float y=size.height;
+
+    
+    if (grounds.count!=0) {
+        // Draw relative to the previously rendered ground sprite
+        // position will change based on anchor point (consider 0,0)
+        y=((CCSprite*)([grounds lastObject])).position.y-redTerrain.contentSize.height;
+    } else {
+        // If this is the first ground to be drawn
+        // Mult by 0.5 b/c anchor isn't 0,0
+        y-=redTerrain.contentSize.height;
+    }
+    
+    // I suppose the 0.5f because anchor isn't 0,0
+    float x = size.width*0.5f;
+
+    
+    redTerrain.position = ccp(x,y);
+    [self addChild:redTerrain];
+    [grounds addObject:redTerrain];
+    
+} // end addRed
 
 @end

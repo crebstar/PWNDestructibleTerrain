@@ -501,6 +501,88 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 
 // TODO :: Create drawVertical line method (crebstar)
 
+-(void)drawVerticalLine:(float)y0 endY:(float)y1 atX:(float)xF withColor:(ccColor4B)colorToApply {
+    /*
+     Draws a vertical line from start point y0 to end point y1 at the specified x coord position
+     */
+    if (!data_) return;
+    
+    int x = xF;
+    
+    if ((x < 0) || (x >= size_.width))  {
+        // The x coordinate provided falls outside the texture and therefore a line cannot be drawn
+        // Fail silently (Well sort of... There is a log statement here)
+        CCLOG(@"CCMutableTexture2D-> x coordinate cannot be less than zero or greater than the width of the texture");
+        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        return;
+    } // end if
+    
+    int yMin, yMax;
+    if (y0 > y1) {
+        // end point is less than start point
+        yMin = y1;
+        yMax = y0;
+    } else {
+        // end point is greater than the start point
+        yMin = y0;
+        yMax = y1;
+    } // end if
+    
+    if (yMax < 0) {
+        // The yMax falls outside of the texture
+        // Fail silently
+        CCLOG(@"CCMutableTexture2D-> yMax coordinate cannot be less than zero");
+        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        return;
+    } // end if
+    
+    if (yMin >= size_.height) {
+        // yMin falls outside of the texture
+        // Fail silently
+        CCLOG(@"CCMutableTexture2D-> yMin coordinate cannot be greater than the width of the texture");
+        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        return;
+    } // end if
+    
+    
+    if (yMin < 0) yMin = 0;
+    if (yMax >= size_.height) yMax = (size_.height - 1);
+        
+    [self setVarsForColor:colorToApply];
+    
+    // IN THE HORIZONTAL METHOD
+   // int offsetStart=(y * width_) + xMin;
+   // int offsetEnd=offsetStart+xMax-xMin;
+    
+    // BUG :: Find out how to access data with this 1d array set up
+    // I think this is row major set up and this current calculation must be changed to accomodate it
+    // I don't know if there is a simple calculation to be had here
+    int offsetStart = (yMin * width_) + x;
+	int offsetEnd = (yMax * width_) + x;
+    
+	if (pixelUint!=0) {
+        
+		for (int offset=offsetStart; offset<=offsetEnd; offset = offset + width_) {
+			pixelUint[offset] = colorUint;
+			//NSLog(@"offset=%d",offset);
+		} // end for
+        
+	} else if (pixelGLushort!=0) {
+        
+		for (int offset=offsetStart; offset<=offsetEnd; offset++) {
+			pixelGLushort[offset] = colorGLushort;
+		} // end for
+        
+	} else if (pixelGLubyte!=0) {
+        
+		for (int offset = offsetStart; offset <= offsetEnd; offset++) {
+			pixelGLubyte[offset] = colorGLubyte;
+		} // end for
+        
+	} // end if
+    
+} // end drawVerticalLine
+
 - (void) fillConvexPolygon:(CGPoint*)p :(int)n withColor:(ccColor4B)c {
 	int *yOrderedIdx = calloc( sizeof(int) * n, 1 );
 	for (int i=0;i<n;i++) {

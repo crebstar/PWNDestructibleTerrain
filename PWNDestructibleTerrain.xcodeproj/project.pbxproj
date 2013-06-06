@@ -150,6 +150,7 @@
 		3FF9B3E1175AAE4300C71ED8 /* grounddetailed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E0175AAE4200C71ED8 /* grounddetailed.png */; };
 		3FF9B3E3175BAB6600C71ED8 /* grounddetailfull.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E2175BAB6600C71ED8 /* grounddetailfull.png */; };
 		3FF9B3E6175BB22400C71ED8 /* fullscreenground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E5175BB22400C71ED8 /* fullscreenground.png */; };
+		3FF9B3EA175C3FCA00C71ED8 /* alphatest.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF9B3E9175C3FCA00C71ED8 /* alphatest.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -451,6 +452,7 @@
 		3FF9B3E0175AAE4200C71ED8 /* grounddetailed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grounddetailed.png; sourceTree = "<group>"; };
 		3FF9B3E2175BAB6600C71ED8 /* grounddetailfull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grounddetailfull.png; sourceTree = "<group>"; };
 		3FF9B3E5175BB22400C71ED8 /* fullscreenground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fullscreenground.png; sourceTree = "<group>"; };
+		3FF9B3E9175C3FCA00C71ED8 /* alphatest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alphatest.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -975,6 +977,7 @@
 		3FF9B3E4175BAC2F00C71ED8 /* AdditionalResources */ = {
 			isa = PBXGroup;
 			children = (
+				3FF9B3E9175C3FCA00C71ED8 /* alphatest.png */,
 				3FF9B3E5175BB22400C71ED8 /* fullscreenground.png */,
 				3FF9B3E2175BAB6600C71ED8 /* grounddetailfull.png */,
 				3FF9B3E0175AAE4200C71ED8 /* grounddetailed.png */,
@@ -1072,6 +1075,7 @@
 				3FF9B3E1175AAE4300C71ED8 /* grounddetailed.png in Resources */,
 				3FF9B3E3175BAB6600C71ED8 /* grounddetailfull.png in Resources */,
 				3FF9B3E6175BB22400C71ED8 /* fullscreenground.png in Resources */,
+				3FF9B3EA175C3FCA00C71ED8 /* alphatest.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1360,6 +1364,7 @@
 				3FF9B24C175A86AA00C71ED8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FF9B271175A8A4400C71ED8 /* Build configuration list for PBXNativeTarget "cocos2d-lib" */ = {
 			isa = XCConfigurationList;
@@ -1368,6 +1373,7 @@
 				3FF9B273175A8A4400C71ED8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

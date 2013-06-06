@@ -106,6 +106,11 @@
 ///
 - (void) drawHorizontalLine:(float)x0 :(float)x1 :(float)yF withColor:(ccColor4B)c;
 
+/*
+ Draw a vertical line (Crebstar - Modification from the original)
+ */
+-(void) drawVerticalLine:(float)y0 endY:(float)y1 atX:(float)xF withColor:(ccColor4B)colorToApply;
+
 ///
 //	Draw a line with width (not optimized for a 1 pixel width line)
 ///
