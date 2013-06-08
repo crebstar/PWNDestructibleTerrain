@@ -499,7 +499,6 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 	}
 }
 
-// TODO :: Create drawVertical line method (crebstar)
 
 -(void)drawVerticalLine:(float)y0 endY:(float)y1 atX:(float)xF withColor:(ccColor4B)colorToApply {
     /*
@@ -578,6 +577,70 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 	} // end if
     
 } // end drawVerticalLine
+
+
+-(void) drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply {
+    /*
+     Draws a vertical line from a given row(x),col(y) from that point to the top edge of the texture
+     In effect, this can be used to modify all pixels above a given x,y coordinate
+     */
+    
+    if (!data_) return; // Fail silently
+    
+    int x = xF; // convert float to int
+    
+    if ((x < 0) || (x >= size_.width))  {
+        // The x coordinate provided falls outside the texture and therefore a line cannot be drawn
+        // Fail silently (Well sort of... There is a log statement here)
+        CCLOG(@"CCMutableTexture2D-> x coordinate cannot be less than zero or greater than the width of the texture");
+        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        return;
+    } // end if
+    
+    
+     //Because we are always drawing to the top edge of the texture for a given point, yMin will always be 0
+    int yMin = 0;
+    int yMax = yStart;
+    
+    if (yMax <= 0) {
+        CCLOG(@"CCMutableTexture2D-> yStart coordinate cannot be less than or equal to zero");
+        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineFromPointToTopEdge");
+    } // end if
+    
+    // Instead of failing just adjust the out of bounds yMax to bottom edge row of the texture
+    if (yMax >= size_.height) yMax = size_.height - 1;
+    
+    [self setVarsForColor:colorToApply];
+    
+    // Find appropriate offsets for traversing vertically
+    int offsetStart = (yMin * width_) + x;
+	int offsetEnd = (yMax * width_) + x;
+    
+    // Each iteration of the for loop should step by the number of columns as the pixel data
+    // is stored in Row Major. This allows for vertical traversal
+	if (pixelUint!=0) {
+        
+		for (int offset=offsetStart; offset<=offsetEnd; offset = offset + width_) {
+			pixelUint[offset] = colorUint;
+			//NSLog(@"offset=%d",offset);
+		} // end for
+        
+	} else if (pixelGLushort!=0) {
+        
+		for (int offset=offsetStart; offset<=offsetEnd; offset = offset + width_) {
+			pixelGLushort[offset] = colorGLushort;
+		} // end for
+        
+	} else if (pixelGLubyte!=0) {
+        
+		for (int offset = offsetStart; offset <= offsetEnd; offset = offset + width_) {
+			pixelGLubyte[offset] = colorGLubyte;
+		} // end for
+        
+	} // end if
+} // end drawVerticalLine
+
+
 
 - (void) fillConvexPolygon:(CGPoint*)p :(int)n withColor:(ccColor4B)c {
 	int *yOrderedIdx = calloc( sizeof(int) * n, 1 );

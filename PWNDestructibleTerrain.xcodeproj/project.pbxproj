@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F5363721763D2280068AAE1 /* DestTerrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363711763D2280068AAE1 /* DestTerrain.m */; };
+		3F5363751763D2760068AAE1 /* DestTerrainSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363741763D2760068AAE1 /* DestTerrainSystem.m */; };
+		3F5363791763E3470068AAE1 /* TerrainTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363781763E3470068AAE1 /* TerrainTestScene.m */; };
+		3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */; };
+		3F5363811763F7940068AAE1 /* TestSprites.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363801763F7940068AAE1 /* TestSprites.m */; };
 		3FF9B0B6175A86A700C71ED8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */; };
 		3FF9B0B8175A86A700C71ED8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B7175A86A700C71ED8 /* OpenGLES.framework */; };
 		3FF9B0BA175A86A700C71ED8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B9175A86A700C71ED8 /* OpenAL.framework */; };
@@ -167,6 +172,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F5363701763D2280068AAE1 /* DestTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestTerrain.h; sourceTree = "<group>"; };
+		3F5363711763D2280068AAE1 /* DestTerrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestTerrain.m; sourceTree = "<group>"; };
+		3F5363731763D2760068AAE1 /* DestTerrainSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DestTerrainSystem.h; sourceTree = "<group>"; };
+		3F5363741763D2760068AAE1 /* DestTerrainSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DestTerrainSystem.m; sourceTree = "<group>"; };
+		3F5363771763E3470068AAE1 /* TerrainTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerrainTestScene.h; sourceTree = "<group>"; };
+		3F5363781763E3470068AAE1 /* TerrainTestScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerrainTestScene.m; sourceTree = "<group>"; };
+		3F53637A1763E3E50068AAE1 /* TestTerrainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTerrainLayer.h; sourceTree = "<group>"; };
+		3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTerrainLayer.m; sourceTree = "<group>"; };
+		3F53637D1763EEDE0068AAE1 /* TerrainProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerrainProtocols.h; sourceTree = "<group>"; };
+		3F53637F1763F7940068AAE1 /* TestSprites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSprites.h; sourceTree = "<group>"; };
+		3F5363801763F7940068AAE1 /* TestSprites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSprites.m; sourceTree = "<group>"; };
 		3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PWNDestructibleTerrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3FF9B0B7175A86A700C71ED8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -484,6 +500,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F5363761763E2E80068AAE1 /* TestScenes */ = {
+			isa = PBXGroup;
+			children = (
+				3F53637E1763F77B0068AAE1 /* Sprites */,
+				3F5363771763E3470068AAE1 /* TerrainTestScene.h */,
+				3F5363781763E3470068AAE1 /* TerrainTestScene.m */,
+				3F53637A1763E3E50068AAE1 /* TestTerrainLayer.h */,
+				3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */,
+			);
+			name = TestScenes;
+			sourceTree = "<group>";
+		};
+		3F53637E1763F77B0068AAE1 /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				3F53637F1763F7940068AAE1 /* TestSprites.h */,
+				3F5363801763F7940068AAE1 /* TestSprites.m */,
+			);
+			name = Sprites;
+			sourceTree = "<group>";
+		};
 		3FF9B0A9175A86A700C71ED8 = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +614,7 @@
 		3FF9B24E175A893D00C71ED8 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				3F5363761763E2E80068AAE1 /* TestScenes */,
 				3FF9B250175A895900C71ED8 /* TerrainEngine */,
 			);
 			name = Scenes;
@@ -603,6 +641,11 @@
 				3FF9B257175A899900C71ED8 /* GameConfig.h */,
 				3FF9B258175A899900C71ED8 /* GameLayer.h */,
 				3FF9B259175A899900C71ED8 /* GameLayer.m */,
+				3F5363701763D2280068AAE1 /* DestTerrain.h */,
+				3F5363711763D2280068AAE1 /* DestTerrain.m */,
+				3F5363731763D2760068AAE1 /* DestTerrainSystem.h */,
+				3F5363741763D2760068AAE1 /* DestTerrainSystem.m */,
+				3F53637D1763EEDE0068AAE1 /* TerrainProtocols.h */,
 			);
 			name = TerrainEngine;
 			sourceTree = "<group>";
@@ -1094,6 +1137,11 @@
 				3FF9B25D175A899900C71ED8 /* GameLayer.m in Sources */,
 				3FF9B262175A89DB00C71ED8 /* AsyncObject.m in Sources */,
 				3FF9B263175A89DB00C71ED8 /* CCMutableTexture2D.m in Sources */,
+				3F5363721763D2280068AAE1 /* DestTerrain.m in Sources */,
+				3F5363751763D2760068AAE1 /* DestTerrainSystem.m in Sources */,
+				3F5363791763E3470068AAE1 /* TerrainTestScene.m in Sources */,
+				3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */,
+				3F5363811763F7940068AAE1 /* TestSprites.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

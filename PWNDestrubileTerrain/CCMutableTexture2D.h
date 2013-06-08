@@ -107,9 +107,15 @@
 - (void) drawHorizontalLine:(float)x0 :(float)x1 :(float)yF withColor:(ccColor4B)c;
 
 /*
- Draw a vertical line (Crebstar - Modification from the original)
+ Draw a vertical line from a given column (x coord) from start row (y0) to end row (y1) 
  */
 -(void) drawVerticalLine:(float)y0 endY:(float)y1 atX:(float)xF withColor:(ccColor4B)colorToApply;
+
+/*
+ Draws a vertical line from a given row(x),col(y) from that point to the top edge of the texture
+ In effect, this can be used to modify all pixels above a given x,y coordinate
+ */
+-(void) drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply;
 
 ///
 //	Draw a line with width (not optimized for a 1 pixel width line)

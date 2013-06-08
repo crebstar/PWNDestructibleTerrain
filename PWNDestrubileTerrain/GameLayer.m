@@ -62,12 +62,12 @@
         
         [self appendNewGround]; // TOP OF SCREEN
         
-        [self appendNewGround];
-        [self appendNewGround];
+        //[self appendNewGround];
+        //[self appendNewGround];
         //[self appendNewGround]; // BOTTOM OF SCREEN
-        [self addRedAlphaTerrain];
+        //[self addRedAlphaTerrain];
         
-        [self editTerrain];
+        //[self editTerrain];
         
 #ifdef SHOW_DRAWN_GROUND_STRIPES
         [self resetGroundColors];
@@ -141,10 +141,10 @@
     //UIImage *image = [UIImage imageNamed:@"grounddetailed.png"];
     
     // Test a different texture with more detail and larger (Comment out above and uncomment below)
-    UIImage *image = [UIImage imageNamed:@"grounddetailfull.png"];
+    //UIImage *image = [UIImage imageNamed:@"grounddetailfull.png"];
     
     // Full screen ground. Only use with one call to this method
-    //UIImage *image = [UIImage imageNamed:@"fullscreenground.png"];
+    UIImage *image = [UIImage imageNamed:@"fullscreenground.png"];
 
     CCMutableTexture2D *groundMutableTexture = [[CCMutableTexture2D alloc] initWithImage:image];
     [groundMutableTexture setAliasTexParameters];
@@ -280,9 +280,9 @@
 
 -(void)fingerAction:(CGPoint)startPoint :(CGPoint)currentPoint {
     
-    // Old names
-    // p0 is the original touch location
-    // p1 is the current touch location
+    //
+    // startPoint is the original touch location
+    // currentPoint is the current touch location
     
     // Create pointer to ground for size calculations?
     CCSprite *sprite=[grounds objectAtIndex:0];
@@ -376,8 +376,19 @@
     
     for (int i = 0; i < 160; i++) {
         
-        //[tex drawHorizontalLine:0 :100 :i withColor:currentColor];
-        [tex drawVerticalLine:0 endY:60.0f atX:i withColor:currentColor];
+        [tex drawHorizontalLine:0 :100 :i withColor:currentColor];
+        //[tex drawVerticalLine:0 endY:60.0f atX:i withColor:currentColor];
+        //[tex drawVerticalLineFromPointToTopEdge:120.0f atX:i withColor:currentColor];
+    }
+    
+    [tex apply];
+    
+    currentColor = ccc4(125, 50, 100, 255);
+    
+    for (int i = 0; i < 60; i++) {
+        
+        [tex drawHorizontalLine:0 :100 :i withColor:currentColor];
+        
     }
     
     [tex apply];
