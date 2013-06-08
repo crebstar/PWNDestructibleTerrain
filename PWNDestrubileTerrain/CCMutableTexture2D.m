@@ -550,16 +550,12 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
         
     [self setVarsForColor:colorToApply];
     
-    // IN THE HORIZONTAL METHOD
-   // int offsetStart=(y * width_) + xMin;
-   // int offsetEnd=offsetStart+xMax-xMin;
-    
-    // BUG :: Find out how to access data with this 1d array set up
-    // I think this is row major set up and this current calculation must be changed to accomodate it
-    // I don't know if there is a simple calculation to be had here
+    // Find appropriate offsets for traversing vertically
     int offsetStart = (yMin * width_) + x;
 	int offsetEnd = (yMax * width_) + x;
     
+    // Each iteration of the for loop should step by the number of columns as the pixel data
+    // is stored in Row Major. This allows for vertical traversal
 	if (pixelUint!=0) {
         
 		for (int offset=offsetStart; offset<=offsetEnd; offset = offset + width_) {
@@ -569,13 +565,13 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
         
 	} else if (pixelGLushort!=0) {
         
-		for (int offset=offsetStart; offset<=offsetEnd; offset++) {
+		for (int offset=offsetStart; offset<=offsetEnd; offset = offset + width_) {
 			pixelGLushort[offset] = colorGLushort;
 		} // end for
         
 	} else if (pixelGLubyte!=0) {
         
-		for (int offset = offsetStart; offset <= offsetEnd; offset++) {
+		for (int offset = offsetStart; offset <= offsetEnd; offset = offset + width_) {
 			pixelGLubyte[offset] = colorGLubyte;
 		} // end for
         
