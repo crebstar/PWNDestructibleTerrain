@@ -28,7 +28,18 @@
 
 -(id)initWithIntID:(NSInteger)terrainID withImage:(UIImage*)image;
 
-// Abstract away the pain of converting to the coordinate system used by CCMutableTexture (y grows more positive in south direction)
+/*
+ Convenience wrapper functions. Handles conversion of points from Cocos2D to point system used by CCMutableTexture2D.
+ After the conversion it calls the appropriate functions
+ */
+
 -(void)drawLineFrom:(CGPoint)startPoint endPoint:(CGPoint)endPoint withWidth:(float)lineWidth withColor:(ccColor4B)color;
+
+-(void)drawHorizontalLine:(float)xStart xEnd:(float)xEnd y:(float)yF withColor:(ccColor4B)colorToApply;
+
+-(void)drawVerticalLine:(float)yStart yEnd:(float)yEnd x:(float)xF withColor:(ccColor4B)colorToApply;
+
+-(void)drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply;
+
 
 @end

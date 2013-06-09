@@ -38,12 +38,13 @@
         isRetina = [self isRetina];
         
         destTerrainSystem = [[DestTerrainSystem alloc] init];
+        [destTerrainSystem setApplyAtEachDraw:YES];
         
         // consider z value as well
         DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
         DestTerrain * ter2 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:1];
         
-        ter1.position = ccp(0,0);
+        ter1.position = ccp(0,100);
         
         ter2.position = ccp(ter1.contentSize.width,0);
         
@@ -54,6 +55,9 @@
         
         // Note must grab texture from the sprite itself meaning it is pointless to hold a pointer to it
         
+        // TESTS BELOW
+        
+        /*
         ter1.position = ccp(0,200);
         [ter1 drawLineFrom:ter1.position
                   endPoint:ccp(ter1.position.x + ter1.contentSize.width,
@@ -61,6 +65,14 @@
                  withWidth:20.0f
                  withColor:ccc4(0, 0, 0, 0)];
         
+        */
+        /*
+        for (int i = 0; i < 240; i++) {
+            
+            [ter1 drawHorizontalLine:0.0f xEnd:160.0f y:(ter1.position.y + i) withColor:ccc4(0, 0, 0, 0)];
+            
+        }
+         */
         
         [self scheduleUpdate];
     } // end if

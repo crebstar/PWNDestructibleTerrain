@@ -94,6 +94,15 @@
     
 }
 
+-(BOOL)shouldApplyAfterEachDraw {
+    // If YES then it applies texture changes after each draw method
+    // This can be hazardous to performance but convenient if you keep
+    // forgetting to call apply or just want it done automagically
+    
+    return applyAtEachDraw;
+    
+} // end shouldApplyAfterEachDraw
+
 #pragma mark Helper Methods
 #pragma mark -
 
@@ -109,5 +118,25 @@
     
     
 }
+
+#pragma mark Mutators
+#pragma mark -
+
+-(void)setApplyAtEachDraw:(BOOL)applyAtEachDraw {
+    
+    if (applyAtEachDraw) {
+        CCLOG(@"Warning setting applyAtEachDraw to true will call the apply method of"
+              "CCMutableTexture for each terrain whose pixel values were modified."
+              "If performance becomes an issue, this should be called manually.");
+    } else {
+        CCLOG(@"applyAtEachDraw is set to false. You must call the apply method for each"
+              "terrain's texture that you have modified before it will take effect."
+              "For best performance, minimize the calls to apply");
+    } // end if
+
+    // Must assign directly to prevent infinite loop :)
+    self->applyAtEachDraw = applyAtEachDraw;
+    
+} // end setApplyAtEachDraw
 
 @end

@@ -521,6 +521,17 @@
 			name = Sprites;
 			sourceTree = "<group>";
 		};
+		3FD1780E176506990059E30E /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				3FF9B258175A899900C71ED8 /* GameLayer.h */,
+				3FF9B259175A899900C71ED8 /* GameLayer.m */,
+				3FF9B255175A899900C71ED8 /* CreditsLayer.h */,
+				3FF9B256175A899900C71ED8 /* CreditsLayer.m */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
 		3FF9B0A9175A86A700C71ED8 = {
 			isa = PBXGroup;
 			children = (
@@ -632,15 +643,12 @@
 		3FF9B250175A895900C71ED8 /* TerrainEngine */ = {
 			isa = PBXGroup;
 			children = (
+				3FD1780E176506990059E30E /* Misc */,
 				3FF9B25E175A89DB00C71ED8 /* AsyncObject.h */,
 				3FF9B25F175A89DB00C71ED8 /* AsyncObject.m */,
 				3FF9B260175A89DB00C71ED8 /* CCMutableTexture2D.h */,
 				3FF9B261175A89DB00C71ED8 /* CCMutableTexture2D.m */,
-				3FF9B255175A899900C71ED8 /* CreditsLayer.h */,
-				3FF9B256175A899900C71ED8 /* CreditsLayer.m */,
 				3FF9B257175A899900C71ED8 /* GameConfig.h */,
-				3FF9B258175A899900C71ED8 /* GameLayer.h */,
-				3FF9B259175A899900C71ED8 /* GameLayer.m */,
 				3F5363701763D2280068AAE1 /* DestTerrain.h */,
 				3F5363711763D2280068AAE1 /* DestTerrain.m */,
 				3F5363731763D2760068AAE1 /* DestTerrainSystem.h */,
