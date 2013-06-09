@@ -39,6 +39,35 @@
     
 } // end initWithIntID
 
+
+-(void)drawLineFrom:(CGPoint)startPoint endPoint:(CGPoint)endPoint withWidth:(float)lineWidth withColor:(ccColor4B)color {
+    /*
+     A layer of abstraction from CCMutableTexture2D. This function handles the conversion of Cocos2D coordinates to the
+     coordinate system used by the CCMutableTexture2D (Where positive y heads south). It will convert the Cocos2D points
+     to points usable by CCMutableTexture2D then call the appropriate drawLine method of the CCMutableTexture for the sprite
+     
+     Note: Important to remember all dest terrain sprites have an anchor point of 0,0
+     TODO :: Consider doing a simple colission check to inform users if they are even drawing on correct terrain sprite
+     */
+        
+    CGPoint localStartPoint; // Localize the startPoint parameter to be within coordinate system of the texture
+    CGPoint localEndPoint; // Localize the endPoint parameter to be within the coordinate system of the texture
+    
+    float yStart = (self.contentSize.height - (startPoint.y - self.position.y));
+    float yEnd = (self.contentSize.height - (endPoint.y - self.position.y));
+
+    localStartPoint = ccp(startPoint.x, yStart);
+    
+    localEndPoint = ccp(endPoint.x, yEnd);
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    
+    [terrainTexture drawLineFrom:localStartPoint to:localEndPoint withLineWidth:lineWidth andColor:color];
+    
+    [terrainTexture apply];
+    
+} // endDrawLineFrom
+
 #pragma mark Overrides
 #pragma mark -
 
@@ -47,7 +76,7 @@
     // Intercepts setting of position and updates the system with the new position
     
     if (delegate) {
-        [delegate updatePositionWithSystem:position];
+        [delegate updatePositionWithSystem:position terID:self.terID];
         CCLOG(@"DestTerrain-> Updating position to DestTerrainSystem");
     } else {
         CCLOG(@"DestTerrain-> Cannot update position to DestTerrainSystem as delegate is nil");

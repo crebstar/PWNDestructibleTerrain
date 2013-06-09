@@ -17,6 +17,10 @@
     DestTerrainSystem * destTerrainSystem;
     BOOL isRetina;
     
+    ccColor4B currentColor;
+    double lastDigTime;
+    CGPoint activeLocation;
+    
 } // end ivars
 
 @property(atomic, strong) DestTerrainSystem * destTerrainSystem;

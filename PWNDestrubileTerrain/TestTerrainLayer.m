@@ -10,6 +10,9 @@
 
 #import "DestTerrainSystem.h"
 #import "DestTerrain.h"
+#import "CCMutableTexture2D.h"
+
+#define DRAW_WIDTH 16.5f
 
 @interface TestTerrainLayer ()
 // Private Functions
@@ -36,9 +39,27 @@
         
         destTerrainSystem = [[DestTerrainSystem alloc] init];
         
+        // consider z value as well
+        DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
+        DestTerrain * ter2 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:1];
         
+        ter1.position = ccp(0,0);
+        
+        ter2.position = ccp(ter1.contentSize.width,0);
+        
+        [self addChild:ter1];
+        [self addChild:ter2];
         
         self.isTouchEnabled = YES;
+        
+        // Note must grab texture from the sprite itself meaning it is pointless to hold a pointer to it
+        
+        ter1.position = ccp(0,200);
+        [ter1 drawLineFrom:ter1.position
+                  endPoint:ccp(ter1.position.x + ter1.contentSize.width,
+                               ter1.position.y + ter1.contentSize.height)
+                 withWidth:20.0f
+                 withColor:ccc4(0, 0, 0, 0)];
         
         
         [self scheduleUpdate];
@@ -57,6 +78,107 @@
    
     
 } // end update
+
+/*
+-(void)fingerAction:(CGPoint)startPoint :(CGPoint)currentPoint {
+    
+    //
+    // startPoint is the original touch location
+    // currentPoint is the current touch location
+    
+    // Create pointer to ground for size calculations?
+    CCSprite *sprite=[grounds objectAtIndex:0];
+    
+    //Find which strips of ground are invovled
+    float maxY,minY;
+    
+    if (currentPoint.y < startPoint.y) {
+        // The current touch location is below start touch location
+        minY = currentPoint.y - (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
+        maxY = startPoint.y + (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
+        
+    } else {
+        // The current touch location is above the start touch location
+        minY = startPoint.y - (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
+        maxY = currentPoint.y + (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
+        
+    } // end if
+    
+    float groundHeight = sprite.contentSize.height*sprite.scaleY;
+    float offsetMin=(sprite.position.y + groundHeight/2) - minY;
+    
+    // Restrict min index to be within ground array bounds
+    int idxMin=offsetMin/groundHeight;
+    if (idxMin<0) idxMin=0;
+    if (idxMin >= grounds.count) idxMin=grounds.count-1;
+    
+    // Restrict max index to be within ground array bounds
+    float offsetMax = (sprite.position.y + groundHeight/2)-maxY;
+    int idxMax=offsetMax/groundHeight;
+    if (idxMax<0) idxMax=0;
+    if (idxMax>=grounds.count) idxMax=grounds.count-1;
+    
+    // At this point we have the index values for the ground segments involved
+    
+
+    
+    for (int i=idxMax; i<=idxMin; i++) {
+        sprite=[grounds objectAtIndex:i];
+        // For each ground segment
+
+        // sprite = groundSprite
+        
+        // CURRENT TOUCH POINT
+        // These contentSize.height/2 calculations aren't needed if we use anchor point of 0,0
+        CGPoint local = ccp(currentPoint.x, (currentPoint.y - sprite.position.y) + sprite.contentSize.height/2);
+        local.y = sprite.contentSize.height-local.y;
+        
+        // START TOUCH POINT
+        CGPoint activeLocal = ccp(startPoint.x , (startPoint.y - sprite.position.y) + sprite.contentSize.height/2);
+        activeLocal.y = sprite.contentSize.height-activeLocal.y;
+        
+        // Draw line with width (currentColor has an alpha value of 0)
+        CCMutableTexture2D* groundMutableTexture=(CCMutableTexture2D*)(sprite.texture);
+        [groundMutableTexture drawLineFrom:activeLocal to:local withLineWidth:DRAW_WIDTH andColor:currentColor];
+        [groundMutableTexture apply]; //Redraw texture
+    }
+}
+*/
+
+
+#pragma mark Touch Methods
+#pragma mark -
+
+- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    /*
+     This simple time restriction is here for performance.
+     I am not noticing any dips in performance at the moment
+     I might try to push it more later with a smaller time interval
+     */
+	UITouch *touch;
+	NSArray *allTouches = [[event allTouches] allObjects];
+    
+	double now=[NSDate timeIntervalSinceReferenceDate];
+    //Draw only every 0.05 seconds to preserve the performance
+	if (now-lastDigTime>0.05f) {
+		touch=[touches anyObject];
+        
+		CGPoint touchLocation = [touch locationInView:nil];
+		touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
+        
+                    // activeLocation = original start of the touch
+            // touchLocation is the current touch spot
+        
+        //[self fingerAction:activeLocation :touchLocation];
+        
+        lastDigTime=now;
+		
+		activeLocation=touchLocation;
+       
+	}
+}
+
+
 
 #pragma mark protocol methods
 #pragma mark -

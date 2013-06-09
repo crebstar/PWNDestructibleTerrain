@@ -83,6 +83,17 @@
 } // end createDestTerrainWithImageName
 
 
+
+
+#pragma mark Delegate Methods
+#pragma mark -
+
+-(void)updatePositionWithSystem:(CGPoint)positionOfTerrain terID:(NSInteger)terrainID {
+    
+    // pass for now
+    
+}
+
 #pragma mark Helper Methods
 #pragma mark -
 

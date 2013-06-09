@@ -11,7 +11,7 @@
 
 
 @protocol DestructibleTerrainProtocols
--(void)updatePositionWithSystem:(CGPoint)positionOfTerrain;
+-(void)updatePositionWithSystem:(CGPoint)positionOfTerrain terID:(NSInteger)terrainID;
 
 @end
 

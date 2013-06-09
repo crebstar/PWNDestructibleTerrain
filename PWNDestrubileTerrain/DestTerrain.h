@@ -28,4 +28,7 @@
 
 -(id)initWithIntID:(NSInteger)terrainID withImage:(UIImage*)image;
 
+// Abstract away the pain of converting to the coordinate system used by CCMutableTexture (y grows more positive in south direction)
+-(void)drawLineFrom:(CGPoint)startPoint endPoint:(CGPoint)endPoint withWidth:(float)lineWidth withColor:(ccColor4B)color;
+
 @end
