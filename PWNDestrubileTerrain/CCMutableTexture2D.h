@@ -1,10 +1,3 @@
-//
-//  CCMutableTexture2D.h
-//  SpaceTankWars
-//
-//  Created by Paul Renton on 6/1/13.
-//
-//
 
 ///
 //	CCMutableTexture2D extends cocos2D CCTexture2D
@@ -16,6 +9,9 @@
 //	Support for RGBA_4_4_4_4 and RGBA_5_5_5_1 was copied from:
 //	https://devforums.apple.com/message/37855#37855 by a1studmuffin
 //
+//  Modifications from Crebstar
+//  drawVerticalLine
+//  drawVerticalLineFromPointToTopEdge
 ///
 
 #import <UIKit/UIKit.h>

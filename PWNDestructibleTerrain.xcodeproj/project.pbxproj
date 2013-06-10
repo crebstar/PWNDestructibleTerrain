@@ -35,7 +35,6 @@
 		3FF9B0E1175A86A800C71ED8 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 3FF9B0E0175A86A800C71ED8 /* iTunesArtwork */; };
 		3FF9B23E175A86AA00C71ED8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B23D175A86AA00C71ED8 /* main.m */; };
 		3FF9B241175A86AA00C71ED8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B240175A86AA00C71ED8 /* AppDelegate.m */; };
-		3FF9B244175A86AA00C71ED8 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B243175A86AA00C71ED8 /* HelloWorldLayer.m */; };
 		3FF9B247175A86AA00C71ED8 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B246175A86AA00C71ED8 /* IntroLayer.m */; };
 		3FF9B25C175A899900C71ED8 /* CreditsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B256175A899900C71ED8 /* CreditsLayer.m */; };
 		3FF9B25D175A899900C71ED8 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FF9B259175A899900C71ED8 /* GameLayer.m */; };
@@ -210,8 +209,6 @@
 		3FF9B23D175A86AA00C71ED8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3FF9B23F175A86AA00C71ED8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3FF9B240175A86AA00C71ED8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3FF9B242175A86AA00C71ED8 /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		3FF9B243175A86AA00C71ED8 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		3FF9B245175A86AA00C71ED8 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		3FF9B246175A86AA00C71ED8 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		3FF9B255175A899900C71ED8 /* CreditsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsLayer.h; sourceTree = "<group>"; };
@@ -614,8 +611,6 @@
 		3FF9B24D175A893100C71ED8 /* TemplateFiles */ = {
 			isa = PBXGroup;
 			children = (
-				3FF9B242175A86AA00C71ED8 /* HelloWorldLayer.h */,
-				3FF9B243175A86AA00C71ED8 /* HelloWorldLayer.m */,
 				3FF9B245175A86AA00C71ED8 /* IntroLayer.h */,
 				3FF9B246175A86AA00C71ED8 /* IntroLayer.m */,
 			);
@@ -1139,7 +1134,6 @@
 			files = (
 				3FF9B23E175A86AA00C71ED8 /* main.m in Sources */,
 				3FF9B241175A86AA00C71ED8 /* AppDelegate.m in Sources */,
-				3FF9B244175A86AA00C71ED8 /* HelloWorldLayer.m in Sources */,
 				3FF9B247175A86AA00C71ED8 /* IntroLayer.m in Sources */,
 				3FF9B25C175A899900C71ED8 /* CreditsLayer.m in Sources */,
 				3FF9B25D175A899900C71ED8 /* GameLayer.m in Sources */,

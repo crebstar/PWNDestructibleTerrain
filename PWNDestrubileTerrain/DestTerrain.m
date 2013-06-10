@@ -76,10 +76,7 @@
 } // endDrawLineFrom
 
 -(void)drawHorizontalLine:(float)xStart xEnd:(float)xEnd y:(float)yF withColor:(ccColor4B)colorToApply {
-    /*
-     Since the x-coords are the same, the only conversion here is the y point
-     */
-    
+   
     float localXStart = xStart - self.position.x;
     float localXEnd = xEnd - self.position.x;
     float localY =  self.contentSize.height - (yF - self.position.y);
@@ -92,6 +89,33 @@
     
     
 } // end drawHorizontalLine
+
+-(void)drawVerticalLine:(float)yStart yEnd:(float)yEnd x:(float)xF withColor:(ccColor4B)colorToApply {
+    
+    float localYStart = self.contentSize.height - (yStart - self.position.y);
+    float localYEnd = self.contentSize.height - (yEnd - self.position.y);
+    float localX = xF - self.position.x;
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    
+    [terrainTexture drawVerticalLine:localYStart endY:localYEnd atX:localX withColor:colorToApply];
+    
+    if ([delegate shouldApplyAfterEachDraw]) [terrainTexture apply];
+    
+} // end drawVerticalLine
+
+-(void)drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply {
+    
+    float localYStart = self.contentSize.height - (yStart - self.position.y);
+    float localX = xF - self.position.x;
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    
+    [terrainTexture drawVerticalLineFromPointToTopEdge:localYStart atX:localX withColor:colorToApply];
+    
+    if ([delegate shouldApplyAfterEachDraw]) [terrainTexture apply];
+    
+} // endDrawVerticalLineFromPointToTopEdge
 
 #pragma mark Overrides
 #pragma mark -

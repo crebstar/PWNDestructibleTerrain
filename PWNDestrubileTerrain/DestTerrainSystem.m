@@ -14,12 +14,15 @@
 // Private Functions
 -(void)createTerrainDict;
 -(void)createGridSystem;
+-(NSMutableArray *)getTerrainCollisionList:(CGPoint)point;
+-(NSMutableArray *)getTerrainCollisionList:(CGPoint)startPoint toEndPoint:(CGPoint)endPoint;
 
 @end
 
 @implementation DestTerrainSystem
 
 @synthesize terrainPieces;
+@synthesize applyAtEachDraw;
 
 
 -(void)dealloc {
@@ -29,6 +32,20 @@
     self.terrainPieces = nil;
     
 } // end dealloc
+
+-(id)init {
+    
+    self = [super init];
+    
+    if (self != nil) {
+        
+        [self createTerrainDict];
+        
+    } // end if
+    
+    return self;
+    
+}
 
 -(id)initWithGridSystem:(CGSize)levelSize {
     // Only Init function for now
@@ -50,7 +67,7 @@
 #pragma mark Factory Methods
 #pragma mark -
 
--(id)createDestTerrainWithImage:(UIImage*)image withID:(NSInteger)terrainID {
+-(id)createDestTerrainWithImage:(UIImage*)image withID:(int)terrainID {
     /*
      Creates a destructible terrain sprite with a given image with integerID
      Best practice would be to use an enumeration or constant integer for easy
@@ -65,11 +82,15 @@
     [destructibleTerrain setDelegate:self];
     [destructibleTerrain setAnchorPoint:ccp(0,0)]; // Default (Simplifies calculation)
     
+    NSNumber * key = [NSNumber numberWithInt:terrainID];
+    [terrainPieces setObject:destructibleTerrain forKey:key];
+    
+    
     return destructibleTerrain;
     
 } // end createDestTerrainWithImage
 
--(id)createDestTerrainWithImageName:(NSString *)imageName withID:(NSInteger)terrainID {
+-(id)createDestTerrainWithImageName:(NSString *)imageName withID:(int)terrainID {
     /*
      For convenience if you don't want to create the UIImage yourself
      */
@@ -83,6 +104,40 @@
 } // end createDestTerrainWithImageName
 
 
+#pragma mark Wrapper Functions
+#pragma mark -
+
+-(void)drawLineFrom:(CGPoint)startPoint endPoint:(CGPoint)endPoint withWidth:(float)lineWidth withColor:(ccColor4B)color {
+    
+    NSMutableArray * colList = [self getTerrainCollisionList:startPoint toEndPoint:endPoint];
+    
+    for (int index = 0; index < [colList count]; index++) {
+        
+        DestTerrain * dTer = [colList objectAtIndex:index];
+        [dTer drawLineFrom:startPoint endPoint:endPoint withWidth:lineWidth withColor:color];
+        
+    } // end for
+    
+    colList = nil;
+    
+} // endDrawLineFrom
+
+-(void)drawHorizontalLine:(float)xStart xEnd:(float)xEnd y:(float)yF withColor:(ccColor4B)colorToApply {
+    
+    
+}
+
+-(void)drawVerticalLine:(float)yStart yEnd:(float)yEnd x:(float)xF withColor:(ccColor4B)colorToApply {
+    
+    
+    
+}
+
+-(void)drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply {
+    
+    
+    
+}
 
 
 #pragma mark Delegate Methods
@@ -103,6 +158,76 @@
     
 } // end shouldApplyAfterEachDraw
 
+#pragma mark Collisions
+#pragma mark
+
+// Single point collisions
+-(NSMutableArray *)getTerrainCollisionList:(CGPoint)point {
+    // TODO :: optimize this later
+    // Currently O(n) where n is number of dest terrain objects
+    
+    NSMutableArray * colList = [[NSMutableArray alloc] init];
+    CGRect rect = CGRectMake(point.x, point.y , 1.0f, 1.0f);
+    
+    for (NSNumber * key in self.terrainPieces) {
+        
+        DestTerrain * dTer = [self.terrainPieces objectForKey:key];
+        
+        if (CGRectIntersectsRect(rect, [dTer boundingBox])) {
+            // Point intersects with the terrain
+            [colList addObject:dTer];
+            
+        } // end if
+        
+        CCLOG(@"origin of given point %f, %f", rect.origin.x, rect.origin.y);
+        CCLOG(@"origin of the bounding box %f, %f", [dTer boundingBox].origin.x, [dTer boundingBox].origin.y);
+    } // end for
+    
+    if ([colList count] == 0) {
+        CCLOG(@"DestTerrainSystem--> There are no terrain objects that intersect with the given point");
+    } else {
+        CCLOG(@"DestTerrainSystem--> There are %d terrain objects that intersect with the given point", [colList count]);
+    }
+    
+    return colList;
+    
+} // getTerrainCollision
+
+// Double point collisions
+-(NSMutableArray *)getTerrainCollisionList:(CGPoint)startPoint toEndPoint:(CGPoint)endPoint {
+    // TODO :: optimize this later
+    // Currently O(n) where n is number of dest terrain objects
+    
+    NSMutableArray * colList = [[NSMutableArray alloc] init];
+    CGRect startRect = CGRectMake(startPoint.x, startPoint.y, 1.0f, 1.0f);
+    CGRect endRect = CGRectMake(endPoint.x, endPoint.y, 1.0f, 1.0f);
+    
+    for (NSNumber * key in self.terrainPieces) {
+        
+        DestTerrain * dTer = [self.terrainPieces objectForKey:key];
+        
+        CGRect boundingBoxOfTerrain = [dTer boundingBox];
+        
+        if (CGRectIntersectsRect(startRect, boundingBoxOfTerrain) ||
+            CGRectIntersectsRect(endRect, boundingBoxOfTerrain)) {
+            // Start point intersects with terrain
+            [colList addObject:dTer];
+            
+        } // end if
+        
+    } // end for
+    
+    if ([colList count] == 0) {
+        CCLOG(@"DestTerrainSystem--> There are no terrain objects that intersect with the given points");
+    } else {
+        CCLOG(@"DestTerrainSystem--> There are %d terrain objects that intersect with the given points", [colList count]);
+    }
+    
+    return colList;
+    
+} // endGetTerrainCollisionList
+
+
 #pragma mark Helper Methods
 #pragma mark -
 
@@ -117,7 +242,8 @@
     // Pass for now
     
     
-}
+} // end crateGridsystem
+
 
 #pragma mark Mutators
 #pragma mark -

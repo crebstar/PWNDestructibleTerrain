@@ -32,8 +32,19 @@
 
 -(id)initWithGridSystem:(CGSize)levelSize;
 
--(id)createDestTerrainWithImage:(UIImage*) image withID:(NSInteger)terrainID;
+-(id)createDestTerrainWithImage:(UIImage*) image withID:(int)terrainID;
 
--(id)createDestTerrainWithImageName:(NSString *)imageName withID:(NSInteger)terrainID;
+-(id)createDestTerrainWithImageName:(NSString *)imageName withID:(int)terrainID;
+
+// Functions which determine which terrain to apply the effect too then make the appropriate call
+// if a collision is present
+
+-(void)drawLineFrom:(CGPoint)startPoint endPoint:(CGPoint)endPoint withWidth:(float)lineWidth withColor:(ccColor4B)color;
+
+-(void)drawHorizontalLine:(float)xStart xEnd:(float)xEnd y:(float)yF withColor:(ccColor4B)colorToApply;
+
+-(void)drawVerticalLine:(float)yStart yEnd:(float)yEnd x:(float)xF withColor:(ccColor4B)colorToApply;
+
+-(void)drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply;
 
 @end

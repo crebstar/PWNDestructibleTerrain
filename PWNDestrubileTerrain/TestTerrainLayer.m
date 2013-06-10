@@ -12,7 +12,7 @@
 #import "DestTerrain.h"
 #import "CCMutableTexture2D.h"
 
-#define DRAW_WIDTH 16.5f
+
 
 @interface TestTerrainLayer ()
 // Private Functions
@@ -57,6 +57,8 @@
         
         // TESTS BELOW
         
+        [destTerrainSystem drawLineFrom:ccp(0,110) endPoint:ccp(400, 340) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
+        
         /*
         ter1.position = ccp(0,200);
         [ter1 drawLineFrom:ter1.position
@@ -73,6 +75,23 @@
             
         }
          */
+        
+        /*
+        for (int i = 0; i < 160; i++) {
+            
+            [ter1 drawVerticalLine:self.position.y yEnd:self.position.y + self.contentSize.height/2 x:i withColor:ccc4(0, 0, 0, 0)];
+            
+        }
+         */
+        
+        /*
+        for (int i = 0; i < 200; i++) {
+            
+            [ter1 drawVerticalLineFromPointToTopEdge:self.position.y + self.contentSize.width/3 atX:i withColor:ccc4(0, 0, 0, 0)];
+            
+        }
+        */
+        
         
         [self scheduleUpdate];
     } // end if
