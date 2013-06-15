@@ -10,6 +10,8 @@
 #import "cocos2d.h"
 #import "TerrainProtocols.h"
 
+
+
 @class DestTerrain;
 
 @interface DestTerrainSystem : NSObject <DestructibleTerrainProtocols> {
@@ -28,7 +30,7 @@
 
 @property(atomic, strong) NSMutableDictionary * terrainPieces;
 
-@property(nonatomic, readwrite) BOOL applyAtEachDraw;
+@property(nonatomic, readwrite) BOOL applyAfterDraw;
 
 -(id)initWithGridSystem:(CGSize)levelSize;
 

@@ -21,6 +21,8 @@
 @synthesize terID;
 @synthesize delegate;
 
+@synthesize applyAfterDraw;
+
 -(id)initWithIntID:(NSInteger)terrainID withImage:(UIImage*)image {
     // Should be the only init method one uses
     
@@ -32,6 +34,7 @@
         
         // Cache id for convenient access if need be
         terID = terrainID;
+        applyAfterDraw = false;
         
     } // end if
     
@@ -71,7 +74,7 @@
     
     [terrainTexture drawLineFrom:localStartPoint to:localEndPoint withLineWidth:lineWidth andColor:color];
     
-    if ([delegate shouldApplyAfterEachDraw]) [terrainTexture apply];
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
     
 } // endDrawLineFrom
 
@@ -85,7 +88,7 @@
     
     [terrainTexture drawHorizontalLine:localXStart :localXEnd :localY withColor:colorToApply];
     
-    if ([delegate shouldApplyAfterEachDraw]) [terrainTexture apply];
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
     
     
 } // end drawHorizontalLine
@@ -100,7 +103,7 @@
     
     [terrainTexture drawVerticalLine:localYStart endY:localYEnd atX:localX withColor:colorToApply];
     
-    if ([delegate shouldApplyAfterEachDraw]) [terrainTexture apply];
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
     
 } // end drawVerticalLine
 
@@ -113,7 +116,7 @@
     
     [terrainTexture drawVerticalLineFromPointToTopEdge:localYStart atX:localX withColor:colorToApply];
     
-    if ([delegate shouldApplyAfterEachDraw]) [terrainTexture apply];
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
     
 } // endDrawVerticalLineFromPointToTopEdge
 

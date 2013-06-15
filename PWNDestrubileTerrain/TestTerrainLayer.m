@@ -38,7 +38,7 @@
         isRetina = [self isRetina];
         
         destTerrainSystem = [[DestTerrainSystem alloc] init];
-        [destTerrainSystem setApplyAtEachDraw:YES];
+        [destTerrainSystem setApplyAfterDraw:YES];
         
         // consider z value as well
         DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
@@ -57,7 +57,8 @@
         
         // TESTS BELOW
         
-        [destTerrainSystem drawLineFrom:ccp(0,110) endPoint:ccp(400, 340) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
+        [destTerrainSystem drawLineFrom:ccp(50,579) endPoint:ccp(51, 579) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
+        
         
         /*
         ter1.position = ccp(0,200);

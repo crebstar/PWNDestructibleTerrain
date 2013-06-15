@@ -19,12 +19,17 @@
     
     id <DestructibleTerrainProtocols> delegate;
     
+    // Set this to true to override the DestTerrainSystem applyAfterDraw BOOL property
+    BOOL applyAfterDraw;
+    
 } // end ivars
 
 @property(atomic, strong) CCMutableTexture2D * mutableTerrainTexture;
 @property(atomic, readonly) NSInteger terID;
 
 @property(nonatomic) id <DestructibleTerrainProtocols> delegate;
+
+@property(nonatomic, readwrite) BOOL applyAfterDraw;
 
 -(id)initWithIntID:(NSInteger)terrainID withImage:(UIImage*)image;
 

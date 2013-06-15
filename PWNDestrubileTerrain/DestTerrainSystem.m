@@ -10,6 +10,9 @@
 #import "DestTerrain.h"
 #import "CCMutableTexture2D.h"
 
+#import "TerCollisionHelper.h"
+
+
 @interface DestTerrainSystem ()
 // Private Functions
 -(void)createTerrainDict;
@@ -22,7 +25,7 @@
 @implementation DestTerrainSystem
 
 @synthesize terrainPieces;
-@synthesize applyAtEachDraw;
+@synthesize applyAfterDraw;
 
 
 -(void)dealloc {
@@ -41,11 +44,59 @@
         
         [self createTerrainDict];
         
+        CGPoint startPoint = ccp(0,0);
+        CGPoint endPoint  = ccp(20,20);
+        
+        LineSegment lineOne = createLineSegment(startPoint, endPoint);
+        
+        CGPoint secPoint  = ccp(20,10);
+        CGPoint secPointEnd = ccp(20,20);
+        
+        // This will intersect with lineOne
+        LineSegment lineTwo = createLineSegment(secPoint, secPointEnd);
+        
+        bool inter = doLineBoundingBoxesIntersect(lineOne, lineTwo);
+        
+        if (inter) {
+            CCLOG(@"The line bounding boxes intersect");
+        } else {
+            CCLOG(@"The line bounding boxes do NOT intersect");
+        } // end if 
+        
+        bool right = isPointRightOfLine(lineOne, secPoint);
+        
+        if (right) {
+            CCLOG(@"Point is to the right of the line");
+        } else {
+            CCLOG(@"Point is to the left of the line");
+        }
+        
+        bool onLine = isPointOnLine(lineOne, ccp(10,10));
+        
+        if (onLine) {
+            CCLOG(@"The point is on the line");
+        } else {
+            CCLOG(@"The point is off the line");
+        }
+        
+        // This won't intersect with lineOne
+        LineSegment lineThree = createLineSegment(ccp(30,10), ccp(30,30));
+        
+        bool linecross = doLinesIntersect(lineOne, lineTwo);
+        
+        if (linecross) {
+            
+            CCLOG(@"The lines intersect");
+        } else {
+            CCLOG(@"The lines DO NOT intersect");
+            
+        }
+        
     } // end if
     
     return self;
     
-}
+} // end init
 
 -(id)initWithGridSystem:(CGSize)levelSize {
     // Only Init function for now
@@ -93,6 +144,7 @@
 -(id)createDestTerrainWithImageName:(NSString *)imageName withID:(int)terrainID {
     /*
      For convenience if you don't want to create the UIImage yourself
+     It will just create the UIImage locally and call the createWithImage function
      */
     
     UIImage * image = [UIImage imageNamed:imageName];
@@ -154,7 +206,7 @@
     // This can be hazardous to performance but convenient if you keep
     // forgetting to call apply or just want it done automagically
     
-    return applyAtEachDraw;
+    return applyAfterDraw;
     
 } // end shouldApplyAfterEachDraw
 
@@ -187,7 +239,7 @@
         CCLOG(@"DestTerrainSystem--> There are no terrain objects that intersect with the given point");
     } else {
         CCLOG(@"DestTerrainSystem--> There are %d terrain objects that intersect with the given point", [colList count]);
-    }
+    } // end if 
     
     return colList;
     
@@ -221,10 +273,9 @@
         CCLOG(@"DestTerrainSystem--> There are no terrain objects that intersect with the given points");
     } else {
         CCLOG(@"DestTerrainSystem--> There are %d terrain objects that intersect with the given points", [colList count]);
-    }
+    } // end if
     
     return colList;
-    
 } // endGetTerrainCollisionList
 
 
@@ -266,3 +317,4 @@
 } // end setApplyAtEachDraw
 
 @end
+

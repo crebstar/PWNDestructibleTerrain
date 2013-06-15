@@ -182,6 +182,7 @@
 		3F53637D1763EEDE0068AAE1 /* TerrainProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerrainProtocols.h; sourceTree = "<group>"; };
 		3F53637F1763F7940068AAE1 /* TestSprites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSprites.h; sourceTree = "<group>"; };
 		3F5363801763F7940068AAE1 /* TestSprites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSprites.m; sourceTree = "<group>"; };
+		3FC6A4A117697A44000FE0C6 /* TerCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionHelper.h; sourceTree = "<group>"; };
 		3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PWNDestructibleTerrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3FF9B0B7175A86A700C71ED8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -649,6 +650,7 @@
 				3F5363731763D2760068AAE1 /* DestTerrainSystem.h */,
 				3F5363741763D2760068AAE1 /* DestTerrainSystem.m */,
 				3F53637D1763EEDE0068AAE1 /* TerrainProtocols.h */,
+				3FC6A4A117697A44000FE0C6 /* TerCollisionHelper.h */,
 			);
 			name = TerrainEngine;
 			sourceTree = "<group>";

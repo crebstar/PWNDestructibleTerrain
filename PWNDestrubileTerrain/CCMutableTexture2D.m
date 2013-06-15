@@ -744,6 +744,7 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 	poly[i]=ccpSub(p1,perp); i++;
 	poly[i]=ccpSub(p0,perp); i++;
     
+    
 	[self fillConvexPolygon:poly :CCMUTABLETEXTURE2D_LINE_POLY_COUNT withColor:c];
     
 	//free(poly);
