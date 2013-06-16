@@ -12,6 +12,7 @@
 		3F5363791763E3470068AAE1 /* TerrainTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363781763E3470068AAE1 /* TerrainTestScene.m */; };
 		3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */; };
 		3F5363811763F7940068AAE1 /* TestSprites.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363801763F7940068AAE1 /* TestSprites.m */; };
+		3F6C28A4176E370C00046BCA /* TerCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */; };
 		3FF9B0B6175A86A700C71ED8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */; };
 		3FF9B0B8175A86A700C71ED8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B7175A86A700C71ED8 /* OpenGLES.framework */; };
 		3FF9B0BA175A86A700C71ED8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B9175A86A700C71ED8 /* OpenAL.framework */; };
@@ -182,6 +183,8 @@
 		3F53637D1763EEDE0068AAE1 /* TerrainProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerrainProtocols.h; sourceTree = "<group>"; };
 		3F53637F1763F7940068AAE1 /* TestSprites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSprites.h; sourceTree = "<group>"; };
 		3F5363801763F7940068AAE1 /* TestSprites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSprites.m; sourceTree = "<group>"; };
+		3F6C28A2176E370C00046BCA /* TerCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionEvent.h; sourceTree = "<group>"; };
+		3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerCollisionEvent.m; sourceTree = "<group>"; };
 		3FC6A4A117697A44000FE0C6 /* TerCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionHelper.h; sourceTree = "<group>"; };
 		3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PWNDestructibleTerrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -651,6 +654,8 @@
 				3F5363741763D2760068AAE1 /* DestTerrainSystem.m */,
 				3F53637D1763EEDE0068AAE1 /* TerrainProtocols.h */,
 				3FC6A4A117697A44000FE0C6 /* TerCollisionHelper.h */,
+				3F6C28A2176E370C00046BCA /* TerCollisionEvent.h */,
+				3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */,
 			);
 			name = TerrainEngine;
 			sourceTree = "<group>";
@@ -1146,6 +1151,7 @@
 				3F5363791763E3470068AAE1 /* TerrainTestScene.m in Sources */,
 				3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */,
 				3F5363811763F7940068AAE1 /* TestSprites.m in Sources */,
+				3F6C28A4176E370C00046BCA /* TerCollisionEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

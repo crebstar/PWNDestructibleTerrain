@@ -44,9 +44,9 @@
         DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
         DestTerrain * ter2 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:1];
         
-        ter1.position = ccp(0,100);
+        ter1.position = ccp(100,0);
         
-        ter2.position = ccp(ter1.contentSize.width,0);
+        ter2.position = ccp(ter1.contentSize.width + 100,0);
         
         [self addChild:ter1];
         [self addChild:ter2];
@@ -57,7 +57,7 @@
         
         // TESTS BELOW
         
-        [destTerrainSystem drawLineFrom:ccp(50,579) endPoint:ccp(51, 579) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
+        [destTerrainSystem drawLineFrom:ccp(100,50) endPoint:ccp(550, 300) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
         
         
         /*

@@ -10,6 +10,7 @@
 #import "CCMutableTexture2D.h"
 
 
+
 @interface DestTerrain ()
 // Private Functions
 
@@ -66,12 +67,16 @@
     float yStart = (self.contentSize.height - (startPoint.y - self.position.y));
     float yEnd = (self.contentSize.height - (endPoint.y - self.position.y));
 
-    localStartPoint = ccp(startPoint.x, yStart);
+    float xStart = (startPoint.x - self.position.x);
+    float xEnd = (endPoint.x - self.position.x);
     
-    localEndPoint = ccp(endPoint.x, yEnd);
+    localStartPoint = ccp(xStart, yStart);
+    
+    localEndPoint = ccp(xEnd, yEnd);
     
     CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
     
+    CCLOG(@"Drawing line from local start %f, %f to localend point %f, %f", localStartPoint.x, localStartPoint.y, localEndPoint.x, localEndPoint.y);
     [terrainTexture drawLineFrom:localStartPoint to:localEndPoint withLineWidth:lineWidth andColor:color];
     
     if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];

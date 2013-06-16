@@ -9,6 +9,8 @@
 #import "cocos2d.h"
 #import <Foundation/Foundation.h>
 
+
+
 #ifndef PWNDestructibleTerrain_TerCollisionHelper_h
 #define PWNDestructibleTerrain_TerCollisionHelper_h
 
@@ -17,8 +19,8 @@
 
 typedef struct {
     
-    BOOL didCollide;
-    CGPoint colPoint;
+    CGPoint colPointStart;
+    CGPoint colPointEnd;
     
 } CollisionData;
 
@@ -28,6 +30,16 @@ typedef struct {
     CGPoint endPoint;
     
 } LineSegment;
+
+
+CollisionData createCollisionData(CGPoint start, CGPoint end) {
+    
+    CollisionData colData;
+    colData.colPointStart = start;
+    colData.colPointEnd = end;
+    return colData;
+    
+} // end createCollisionData
 
 LineSegment createLineSegment(CGPoint start, CGPoint end) {
     /* Convenience method to initialize linesegment struct */
@@ -108,78 +120,80 @@ bool doLinesIntersect(LineSegment lineOne, LineSegment lineTwo) {
 } // end doLinesIntersect
 
 
+bool getLineIntersectionPoint(LineSegment lineOne, LineSegment lineTwo, CGPoint * intersectionPoint) {
+    /*
+     Returns true if there is an intersection and modifies a past in LineSegment pointer
+     This is more optimized but less descriptive of why there is or is not a collision
+     Use this if you don't care about details on intermediate steps and want the added
+     calculations involved for determining the intersection point between the two lines
+     
+     See this article for a good description of the algor (see posts towards bottom)
+     http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+     
+     */
+    
+    float s10_x, s10_y; // Vector components for first line
+    float s32_x, s32_y; // Vector components for second line
+    
+    // Get 2D vector components for lineOne
+    s10_x = lineOne.endPoint.x - lineOne.startPoint.x;
+    s10_y = lineOne.endPoint.y - lineOne.startPoint.y;
+    
+    // Get 2D vector components for lineTwo
+    s32_x = lineTwo.endPoint.x - lineTwo.startPoint.x;
+    s32_y = lineTwo.endPoint.y - lineTwo.startPoint.y;
+    
+    double denom = crossProduct(ccp(s10_x,s10_y), ccp(s32_x, s32_y));
+    if (denom == 0) {
+        CCLOG(@"The two lines are colinear");
+        return false; // Colinear
+    } // end if
+    
+    bool denomPositive = denom > 0; // denom can't be 0 at this point
+    
+    float s02_x, s02_y;
+    float s_numer;
+    
+    s02_x = lineOne.startPoint.x - lineTwo.startPoint.x;
+    s02_y = lineOne.startPoint.y - lineTwo.startPoint.y;
+    
+    s_numer = crossProduct(ccp(s10_x, s10_y), ccp(s02_x, s02_y));
+    
+    if ((s_numer < 0) && denomPositive) {
+        CCLOG(@"Failed on s_numer");
+        return false; // no collision
+    } // end if
+    
+    float t_numer;
+    
+    t_numer = crossProduct(ccp(s32_x, s32_y), ccp(s02_x, s02_y));
+    
+    if ((t_numer < 0) == denomPositive) {
+        CCLOG(@"failed on t_numer");
+        return false; // no collision
+    } // end if
+    
+    if (((s_numer > denom) == denomPositive) ||
+        ((t_numer > denom) == denomPositive)) {
+        CCLOG(@"Failed on s and t");
+        return false; // no collision
+    } // end if
+    
+    // Collision detected if it gets this far
+    float t;
+    t = t_numer / denom; // Remember it is impossible for denom to be 0 at this point
+    
+    if (intersectionPoint) {
+        // Get the intersection points
+        intersectionPoint->x = lineOne.startPoint.x + (t * s10_x);
+        intersectionPoint->y = lineOne.startPoint.y + (t * s10_y);
+    } // end if
+    
+    return true;
+    
+} // end getLineIntersectionPoints
 
-/*
- TODO:: Implement this algorithm
- http://martin-thoma.com/how-to-check-if-two-line-segments-intersect/
- http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
- 
- // Returns 1 if the lines intersect, otherwise 0. In addition, if the lines
- // intersect the intersection point may be stored in the floats i_x and i_y.
- 
- char get_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y,
- float p2_x, float p2_y, float p3_x, float p3_y, float *i_x, float *i_y)
- {
- float s1_x, s1_y, s2_x, s2_y;
- // This converting to vectors?
- s1_x = p1_x - p0_x;     s1_y = p1_y - p0_y;
- s2_x = p3_x - p2_x;     s2_y = p3_y - p2_y;
- 
- float s, t;
- s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
- t = ( s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
- 
- if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
- {
- // Collision detected
- if (i_x != NULL)
- *i_x = p0_x + (t * s1_x);
- if (i_y != NULL)
- *i_y = p0_y + (t * s1_y);
- return 1;
- }
- 
- return 0; // No collision
- }
- 
- // Alternative
- int get_line_intersection(float p0_x, float p0_y, float p1_x, float p1_y,
- float p2_x, float p2_y, float p3_x, float p3_y, float *i_x, float *i_y)
- {
- float s02_x, s02_y, s10_x, s10_y, s32_x, s32_y, s_numer, t_numer, denom, t;
- s10_x = p1_x - p0_x;
- s10_y = p1_y - p0_y;
- s32_x = p3_x - p2_x;
- s32_y = p3_y - p2_y;
- 
- denom = s10_x * s32_y - s32_x * s10_y;
- if (denom == 0)
- return 0; // Collinear
- bool denomPositive = denom > 0;
- 
- s02_x = p0_x - p2_x;
- s02_y = p0_y - p2_y;
- s_numer = s10_x * s02_y - s10_y * s02_x;
- if ((s_numer < 0) == denomPositive)
- return 0; // No collision
- 
- t_numer = s32_x * s02_y - s32_y * s02_x;
- if ((t_numer < 0) == denomPositive)
- return 0; // No collision
- 
- if (((s_numer > denom) == denomPositive) || ((t_numer > denom) == denomPositive))
- return 0; // No collision
- // Collision detected
- t = t_numer / denom;
- if (i_x != NULL)
- *i_x = p0_x + (t * s10_x);
- if (i_y != NULL)
- *i_y = p0_y + (t * s10_y);
- 
- return 1;
- }
- 
- */
+
 
 
 #endif
