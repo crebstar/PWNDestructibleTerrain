@@ -118,6 +118,10 @@
 ///
 -(void) drawLineFrom:(CGPoint)p0 to:(CGPoint)p1 withLineWidth:(float)w andColor:(ccColor4B) c;
 
+-(void) drawCircle:(CGPoint)circleOrigin withRadius:(float)radius withColor:(ccColor4B)color;
+
+-(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color;
+
 
 ///
 //	Apply actually updates the texture with any new data we added.

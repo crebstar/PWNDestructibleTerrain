@@ -641,6 +641,65 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 } // end drawVerticalLine
 
 
+-(void) drawCircle:(CGPoint)circleOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    int x = radius;
+    int y = 0;
+    int radiusError = 1 - x;
+    
+    while (x >= y) {
+        
+        // Bottom half
+        [self drawHorizontalLine:(x + circleOrigin.x) :(circleOrigin.x - x) :(y + circleOrigin.y) withColor:color];
+        
+        // Top half
+        [self drawHorizontalLine:(x + circleOrigin.x) :(circleOrigin.x - x) :(circleOrigin.y - y) withColor:color];
+        
+        // left side
+        [self drawVerticalLine:(x + circleOrigin.y) endY:(circleOrigin.y - x) atX:(-y + circleOrigin.x) withColor:color];
+        
+        // right side
+        [self drawVerticalLine:(x + circleOrigin.y) endY:(circleOrigin.y - x) atX:(y + circleOrigin.x) withColor:color];
+        
+        y++;
+         
+        
+        if (radiusError < 0) {
+            radiusError = radiusError +  ((2 * y) +1);
+        } else {
+            x--; // Comment this out to draw a square
+            radiusError = radiusError + (2 * (y - x + 1));
+        } // end if
+        
+    } // end while
+    
+} // end draw circle
+
+-(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    int x = radius;
+    int y = 0;
+    int radiusError = 1 - x;
+    
+    while (x >= y) {
+        
+        // Bottom half
+        [self drawHorizontalLine:(x + squareOrigin.x) :(squareOrigin.x - x) :(y + squareOrigin.y) withColor:color];
+        
+        // Top half
+        [self drawHorizontalLine:(x + squareOrigin.x) :(squareOrigin.x - x) :(squareOrigin.y - y) withColor:color];
+        
+        y++;
+        
+        if (radiusError < 0) {
+            radiusError = radiusError +  ((2 * y) +1);
+        } else {
+            radiusError = radiusError + (2 * (y - x + 1));
+        } // end if
+        
+    } // end while
+    
+} //endDrawSquare
 
 - (void) fillConvexPolygon:(CGPoint*)p :(int)n withColor:(ccColor4B)c {
 	int *yOrderedIdx = calloc( sizeof(int) * n, 1 );

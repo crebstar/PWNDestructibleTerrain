@@ -53,11 +53,16 @@
         
         self.isTouchEnabled = YES;
         
+        [destTerrainSystem drawCircle:ccp(300,100) withRadius:30.0f withColor:ccc4(0, 0, 0, 0)];
+        [destTerrainSystem drawSquare:ccp(500,100) withRadius:30.0f withColor:ccc4(0, 0, 0, 0)];
+        
+        [destTerrainSystem drawCircle:ccp(110,0) withRadius:50.0f withColor:ccc4(0, 0, 0, 0)];
+        
         // Note must grab texture from the sprite itself meaning it is pointless to hold a pointer to it
         
         // TESTS BELOW
         
-        [destTerrainSystem drawLineFrom:ccp(100,50) endPoint:ccp(550, 300) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
+        //[destTerrainSystem drawLineFrom:ccp(100,50) endPoint:ccp(550, 300) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
         
         
         /*

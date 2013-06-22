@@ -210,6 +210,33 @@
     
 }
 
+-(void) drawCircle:(CGPoint)circleOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    DestTerrain * ter = [self getTerrainCollision:circleOrigin];
+    
+    if (!ter)  {
+        CCLOG(@"No Single Collision Detected");
+        return;
+    } // end if
+    
+    CCLOG(@"Single Collision Detected at %f, %f", circleOrigin.x, circleOrigin.y);
+    [ter drawCircle:circleOrigin withRadius:radius withColor:color];
+    
+} // end DrawCircle
+
+-(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    DestTerrain * ter = [self getTerrainCollision:squareOrigin];
+    
+    if (!ter) {
+        CCLOG(@"No Single Collision Detected");
+        return;
+    } // end if
+    
+    CCLOG(@"Single Collision Detected at %f, %f", squareOrigin.x, squareOrigin.y);
+    [ter drawSquare:squareOrigin withRadius:radius withColor:color];
+} // end drawSquare
+
 
 #pragma mark Delegate Methods
 #pragma mark -

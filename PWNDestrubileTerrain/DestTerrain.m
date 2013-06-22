@@ -125,6 +125,33 @@
     
 } // endDrawVerticalLineFromPointToTopEdge
 
+
+-(void) drawCircle:(CGPoint)circleOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    int localXOrigin = circleOrigin.x - self.position.x;
+    int localYOrigin = self.contentSize.height - (circleOrigin.y - self.position.y);
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    
+    [terrainTexture drawCircle:ccp(localXOrigin, localYOrigin) withRadius:radius withColor:color];
+    
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
+    
+} // end drawCircle
+
+-(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    int localXOrigin = squareOrigin.x - self.position.x;
+    int localYOrigin = self.contentSize.height - (squareOrigin.y - self.position.y);
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    
+    [terrainTexture drawSquare:ccp(localXOrigin, localYOrigin) withRadius:radius withColor:color];
+    
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
+    
+} // end drawSquare
+
 #pragma mark Overrides
 #pragma mark -
 
