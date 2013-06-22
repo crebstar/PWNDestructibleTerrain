@@ -58,6 +58,8 @@
         
         [destTerrainSystem drawCircle:ccp(110,0) withRadius:50.0f withColor:ccc4(0, 0, 0, 0)];
         
+        [destTerrainSystem drawLineFrom:ccp(50,200) endPoint:ccp(900, 200) withWidth:20.0f withColor:ccc4(0, 0, 0, 0)];
+        
         // Note must grab texture from the sprite itself meaning it is pointless to hold a pointer to it
         
         // TESTS BELOW

@@ -44,71 +44,6 @@
         
         [self createTerrainDict];
         
-        /*
-        CGPoint startPoint = ccp(0,0);
-        CGPoint endPoint  = ccp(20,20);
-        
-        LineSegment lineOne = createLineSegment(startPoint, endPoint);
-        
-        CGPoint secPoint  = ccp(20,10);
-        CGPoint secPointEnd = ccp(12,25);
-       
-        // This will intersect with lineOne
-        LineSegment lineTwo = createLineSegment(secPoint, secPointEnd);
-        
-        CGPoint  colPoint = ccp(0,0);
-        bool intOpt = getLineIntersectionPoint(lineOne, lineTwo, &colPoint);
-        
-        if (intOpt) {
-            
-            CCLOG(@"The lines intersected and intersect at %f, %f", colPoint.x, colPoint.y);
-        } else {
-            CCLOG(@"The lines do not intersect");
-        } // end if
-
-        */ 
-       
-        
-        /*
-        bool inter = doLineBoundingBoxesIntersect(lineOne, lineTwo);
-        
-        if (inter) {
-            CCLOG(@"The line bounding boxes intersect");
-        } else {
-            CCLOG(@"The line bounding boxes do NOT intersect");
-        } // end if 
-        
-        bool right = isPointRightOfLine(lineOne, secPoint);
-        
-        if (right) {
-            CCLOG(@"Point is to the right of the line");
-        } else {
-            CCLOG(@"Point is to the left of the line");
-        }
-        
-        bool onLine = isPointOnLine(lineOne, ccp(10,10));
-        
-        if (onLine) {
-            CCLOG(@"The point is on the line");
-        } else {
-            CCLOG(@"The point is off the line");
-        }
-        
-        // This won't intersect with lineOne
-        LineSegment lineThree = createLineSegment(ccp(30,10), ccp(30,30));
-        
-        bool linecross = doLinesIntersect(lineOne, lineTwo);
-        
-        if (linecross) {
-            
-            CCLOG(@"The lines intersect");
-        } else {
-            CCLOG(@"The lines DO NOT intersect");
-            
-        }
-        */
-        
-               
     } // end if
     
     return self;
@@ -183,8 +118,8 @@
     for (int index = 0; index < [colList count]; index++) {
         
         TerCollisionEvent * event = [colList objectAtIndex:index];
-        CCLOG(@"Collision event coords are %f, %f", event.startPoint.x, event.startPoint.y);
-        CCLOG(@"Collision event coords are %f, %f", event.endPoint.x, event.endPoint.y);
+        //CCLOG(@"Collision event coords are %f, %f", event.startPoint.x, event.startPoint.y);
+        //CCLOG(@"Collision event coords are %f, %f", event.endPoint.x, event.endPoint.y);
         [event.ter drawLineFrom:event.startPoint endPoint:event.endPoint withWidth:lineWidth withColor:color];
         
     } // end for
@@ -195,31 +130,51 @@
 
 -(void)drawHorizontalLine:(float)xStart xEnd:(float)xEnd y:(float)yF withColor:(ccColor4B)colorToApply {
     
+    DestTerrain * ter = [self getTerrainCollision:ccp(xStart, yF)];
+
+    if (!ter) {
+        return;
+    } // end if
     
-}
+    [ter drawHorizontalLine:xStart xEnd:xEnd y:yF withColor:colorToApply];
+    
+} // end drawHorizontalLine
 
 -(void)drawVerticalLine:(float)yStart yEnd:(float)yEnd x:(float)xF withColor:(ccColor4B)colorToApply {
     
+    // Only single collision for now.. consider changing later
+    DestTerrain * ter = [self getTerrainCollision:ccp(xF, yStart)];
     
+    if (!ter) {
+        return;
+    } // end if
     
-}
+    [ter drawVerticalLine:yStart yEnd:yEnd x:xF withColor:colorToApply];
+    
+} // end drawVerticalLine
 
 -(void)drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply {
     
+    DestTerrain * ter = [self getTerrainCollision:ccp(xF,yStart)];
     
+    if (!ter) {
+        return;
+    } // end if
     
-}
+    [ter drawVerticalLineFromPointToTopEdge:yStart atX:xF withColor:colorToApply];
+    
+} // end drawVerticalLineFromPointToTopEdge
 
 -(void) drawCircle:(CGPoint)circleOrigin withRadius:(float)radius withColor:(ccColor4B)color {
     
     DestTerrain * ter = [self getTerrainCollision:circleOrigin];
     
     if (!ter)  {
-        CCLOG(@"No Single Collision Detected");
+        //CCLOG(@"No Single Collision Detected");
         return;
     } // end if
     
-    CCLOG(@"Single Collision Detected at %f, %f", circleOrigin.x, circleOrigin.y);
+    //CCLOG(@"Single Collision Detected at %f, %f", circleOrigin.x, circleOrigin.y);
     [ter drawCircle:circleOrigin withRadius:radius withColor:color];
     
 } // end DrawCircle
@@ -229,11 +184,11 @@
     DestTerrain * ter = [self getTerrainCollision:squareOrigin];
     
     if (!ter) {
-        CCLOG(@"No Single Collision Detected");
+        //CCLOG(@"No Single Collision Detected");
         return;
     } // end if
     
-    CCLOG(@"Single Collision Detected at %f, %f", squareOrigin.x, squareOrigin.y);
+    //CCLOG(@"Single Collision Detected at %f, %f", squareOrigin.x, squareOrigin.y);
     [ter drawSquare:squareOrigin withRadius:radius withColor:color];
 } // end drawSquare
 
@@ -288,9 +243,8 @@
 // Double point collisions
 -(NSMutableArray *)getTerrainCollisionList:(CGPoint)startPoint toEndPoint:(CGPoint)endPoint {
     /*
-     Gets all terrain objects that collide with the two points
+     Gets all terrain objects that collide with a line segment
      */
-    
     NSMutableArray * colList = [[NSMutableArray alloc] init];
     CGRect startRect = CGRectMake(startPoint.x, startPoint.y, 1.0f, 1.0f);
     CGRect endRect = CGRectMake(endPoint.x, endPoint.y, 1.0f, 1.0f);
@@ -326,7 +280,7 @@
         
         if (CGRectIntersectsRect(endRect, boundingBoxOfTerrain)) {
             // End point intersects with terrain but not start point
-            
+            // Must determine the intersection point
                 CCLOG(@"End intersects but start does not");
                 
                 
@@ -349,17 +303,17 @@
                                                           ccp(dTer.boundingBox.origin.x + dTer.contentSize.width, dTer.boundingBox.origin.y));
                 
                 if (getLineIntersectionPoint(segLeft, origLine, &startIntersectionPoint)) {
-                    CCLOG(@"Intersection segLeft at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+                    //CCLOG(@"Intersection segLeft at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
                     
                 } else if (getLineIntersectionPoint(segRight, origLine, &startIntersectionPoint)) {
-                     CCLOG(@"Intersection segRight at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+                     //CCLOG(@"Intersection segRight at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
                     
                 } else if (getLineIntersectionPoint(segTop, origLine, &startIntersectionPoint)) {
-                     CCLOG(@"Intersection segTop at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+                     //CCLOG(@"Intersection segTop at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
                     
                 } else if (getLineIntersectionPoint(segBottom, origLine, &startIntersectionPoint)) {
-                     CCLOG(@"Intersection segBottom at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
-                    
+                     //CCLOG(@"Intersection segBottom at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+        
                 } else {
                     CCLOG(@"Error with collision logic: There should be a collision point");
                 } // end if
@@ -378,16 +332,65 @@
         if (!event) {
             // Neither start or end is touching
             // But it is still possible the line intersects other terrain pieces
-            CCLOG(@"No Collision Event detected for a terrain piece");
+            BOOL didIntersect = NO; // Try to prove assumption wrong
+            CGPoint startIntersectionPoint = ccp(0,0);
+            LineSegment origLine = createLineSegment(startPoint, endPoint);
+            event = [[TerCollisionEvent alloc] initWithCollisionEventFor:dTer startInter:NO endInter:NO];
+            
+            // Ordering from most likely to least likely intersection points
+            
+            LineSegment segLeft = createLineSegment(ccp(dTer.boundingBox.origin.x, dTer.boundingBox.origin.y),
+                                                    ccp(dTer.boundingBox.origin.x, dTer.boundingBox.origin.y + dTer.contentSize.height));
+            
+            LineSegment segRight = createLineSegment(ccp(dTer.boundingBox.origin.x + dTer.contentSize.width, dTer.boundingBox.origin.y),
+                                                     ccp(dTer.boundingBox.origin.x + dTer.contentSize.width, dTer.boundingBox.origin.y + dTer.contentSize.height));
+            
+            LineSegment segTop = createLineSegment(ccp(dTer.boundingBox.origin.x, dTer.boundingBox.origin.y + dTer.contentSize.height),
+                                                   ccp(dTer.boundingBox.origin.x + dTer.contentSize.height, dTer.boundingBox.origin.y + dTer.contentSize.height));
+            
+            LineSegment segBottom = createLineSegment(ccp(dTer.boundingBox.origin.x, dTer.boundingBox.origin.y),
+                                                      ccp(dTer.boundingBox.origin.x + dTer.contentSize.width, dTer.boundingBox.origin.y));
+            
+            if (getLineIntersectionPoint(segLeft, origLine, &startIntersectionPoint)) {
+                //CCLOG(@"Intersection segLeft at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+                didIntersect = YES;
+                event.startPoint = startIntersectionPoint;
+            }
+            
+            if (getLineIntersectionPoint(segRight, origLine, &startIntersectionPoint)) {
+                //CCLOG(@"Intersection segRight at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+                if (didIntersect) { event.endPoint = startIntersectionPoint; }
+                else { event.startPoint = startIntersectionPoint; didIntersect = YES; }
+                
+            }
+            
+            if (getLineIntersectionPoint(segTop, origLine, &startIntersectionPoint)) {
+                //CCLOG(@"Intersection segTop at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+                if (didIntersect) { event.endPoint = startIntersectionPoint; }
+                else { event.startPoint = startIntersectionPoint; didIntersect = YES; }
+            }
+            
+            if (getLineIntersectionPoint(segBottom, origLine, &startIntersectionPoint)) {
+                //CCLOG(@"Intersection segBottom at %f, %f", startIntersectionPoint.x, startIntersectionPoint.y);
+                if (didIntersect) { event.endPoint = startIntersectionPoint; }
+                else { event.startPoint = startIntersectionPoint; didIntersect = YES; }
+            }
+            
+            if (didIntersect) {
+                [colList addObject:event];
+            } 
+                           
         } // end not event
         
     } // end for
     
+    /* Testing collision count :: Uncomment if you wish for testing
     if ([colList count] == 0) {
         CCLOG(@"DestTerrainSystem--> There are no terrain objects that intersect with the given points");
     } else {
         CCLOG(@"DestTerrainSystem--> There are %d terrain objects that intersect with the given points", [colList count]);
     } // end if
+    */
     
     return colList;
 } // endGetTerrainCollisionList

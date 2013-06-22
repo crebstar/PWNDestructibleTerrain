@@ -511,8 +511,8 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
     if ((x < 0) || (x >= size_.width))  {
         // The x coordinate provided falls outside the texture and therefore a line cannot be drawn
         // Fail silently (Well sort of... There is a log statement here)
-        CCLOG(@"CCMutableTexture2D-> x coordinate cannot be less than zero or greater than the width of the texture");
-        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        //CCLOG(@"CCMutableTexture2D-> x coordinate cannot be less than zero or greater than the width of the texture");
+        //CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
         return;
     } // end if
     
@@ -530,16 +530,16 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
     if (yMax < 0) {
         // The yMax falls outside of the texture
         // Fail silently
-        CCLOG(@"CCMutableTexture2D-> yMax coordinate cannot be less than zero");
-        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        //CCLOG(@"CCMutableTexture2D-> yMax coordinate cannot be less than zero");
+        //CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
         return;
     } // end if
     
     if (yMin >= size_.height) {
         // yMin falls outside of the texture
         // Fail silently
-        CCLOG(@"CCMutableTexture2D-> yMin coordinate cannot be greater than the width of the texture");
-        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        //CCLOG(@"CCMutableTexture2D-> yMin coordinate cannot be greater than the width of the texture");
+        //CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
         return;
     } // end if
     
@@ -592,8 +592,8 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
     if ((x < 0) || (x >= size_.width))  {
         // The x coordinate provided falls outside the texture and therefore a line cannot be drawn
         // Fail silently (Well sort of... There is a log statement here)
-        CCLOG(@"CCMutableTexture2D-> x coordinate cannot be less than zero or greater than the width of the texture");
-        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
+        //CCLOG(@"CCMutableTexture2D-> x coordinate cannot be less than zero or greater than the width of the texture");
+        //CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
         return;
     } // end if
     
@@ -603,8 +603,8 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
     int yMax = yStart;
     
     if (yMax <= 0) {
-        CCLOG(@"CCMutableTexture2D-> yStart coordinate cannot be less than or equal to zero");
-        CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineFromPointToTopEdge");
+        //CCLOG(@"CCMutableTexture2D-> yStart coordinate cannot be less than or equal to zero");
+        //CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineFromPointToTopEdge");
     } // end if
     
     // Instead of failing just adjust the out of bounds yMax to bottom edge row of the texture
@@ -642,7 +642,9 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 
 
 -(void) drawCircle:(CGPoint)circleOrigin withRadius:(float)radius withColor:(ccColor4B)color {
-    
+    /*
+     Draws a circle. There is some overlap here but it is fairly efficient
+     */
     int x = radius;
     int y = 0;
     int radiusError = 1 - x;
@@ -662,7 +664,6 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
         [self drawVerticalLine:(x + circleOrigin.y) endY:(circleOrigin.y - x) atX:(y + circleOrigin.x) withColor:color];
         
         y++;
-         
         
         if (radiusError < 0) {
             radiusError = radiusError +  ((2 * y) +1);
