@@ -786,6 +786,8 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 	CGPoint perp=ccpPerp(vector);
 	CGPoint midPerp=ccpPerp(midVector);
     
+    
+    
 	//int n=10;
     
 	//CGPoint *poly = calloc( sizeof(CGPoint) * n, 1 );

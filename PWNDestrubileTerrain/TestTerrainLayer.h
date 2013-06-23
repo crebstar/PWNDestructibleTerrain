@@ -21,6 +21,8 @@
     double lastDigTime;
     CGPoint activeLocation;
     
+    CCSprite * tankSprite;
+    
 } // end ivars
 
 @property(atomic, strong) DestTerrainSystem * destTerrainSystem;

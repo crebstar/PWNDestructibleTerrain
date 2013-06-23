@@ -152,6 +152,17 @@
     
 } // end drawSquare
 
+- (ccColor4B) pixelAt:(CGPoint) pt {
+    
+    int localXOrigin = pt.x - self.position.x;
+    int localYOrigin = self.contentSize.height - (pt.y - self.position.y);
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    
+    return [terrainTexture pixelAt:ccp(localXOrigin, localYOrigin)];
+    
+} // end pixelAt
+
 #pragma mark Overrides
 #pragma mark -
 

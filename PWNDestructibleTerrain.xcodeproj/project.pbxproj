@@ -13,6 +13,7 @@
 		3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */; };
 		3F5363811763F7940068AAE1 /* TestSprites.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363801763F7940068AAE1 /* TestSprites.m */; };
 		3F6C28A4176E370C00046BCA /* TerCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */; };
+		3F7D1A811777635D00CF6558 /* Earth_Tank.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D1A801777635D00CF6558 /* Earth_Tank.png */; };
 		3FF9B0B6175A86A700C71ED8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */; };
 		3FF9B0B8175A86A700C71ED8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B7175A86A700C71ED8 /* OpenGLES.framework */; };
 		3FF9B0BA175A86A700C71ED8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B9175A86A700C71ED8 /* OpenAL.framework */; };
@@ -185,6 +186,7 @@
 		3F5363801763F7940068AAE1 /* TestSprites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSprites.m; sourceTree = "<group>"; };
 		3F6C28A2176E370C00046BCA /* TerCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionEvent.h; sourceTree = "<group>"; };
 		3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerCollisionEvent.m; sourceTree = "<group>"; };
+		3F7D1A801777635D00CF6558 /* Earth_Tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Earth_Tank.png; sourceTree = "<group>"; };
 		3FC6A4A117697A44000FE0C6 /* TerCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionHelper.h; sourceTree = "<group>"; };
 		3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PWNDestructibleTerrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -509,6 +511,7 @@
 				3F5363781763E3470068AAE1 /* TerrainTestScene.m */,
 				3F53637A1763E3E50068AAE1 /* TestTerrainLayer.h */,
 				3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */,
+				3F7D1A801777635D00CF6558 /* Earth_Tank.png */,
 			);
 			name = TestScenes;
 			sourceTree = "<group>";
@@ -1129,6 +1132,7 @@
 				3FF9B3E3175BAB6600C71ED8 /* grounddetailfull.png in Resources */,
 				3FF9B3E6175BB22400C71ED8 /* fullscreenground.png in Resources */,
 				3FF9B3EA175C3FCA00C71ED8 /* alphatest.png in Resources */,
+				3F7D1A811777635D00CF6558 /* Earth_Tank.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1311,6 +1315,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1323,6 +1329,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PWNDestructibleTerrain;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1332,6 +1340,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PWNDestrubileTerrain/Prefix.pch;
@@ -1343,6 +1353,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PWNDestructibleTerrain;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

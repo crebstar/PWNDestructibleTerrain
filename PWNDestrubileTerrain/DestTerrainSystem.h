@@ -53,4 +53,6 @@
 
 -(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color;
 
+- (BOOL) pixelAt:(CGPoint) pt colorCache:(ccColor4B*)color;
+
 @end

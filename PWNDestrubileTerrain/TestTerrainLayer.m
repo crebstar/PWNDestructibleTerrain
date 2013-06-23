@@ -43,13 +43,17 @@
         // consider z value as well
         DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
         DestTerrain * ter2 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:1];
+        DestTerrain * ter3 = [destTerrainSystem createDestTerrainWithImageName:@"grounddetailfull.png" withID:3];
         
         ter1.position = ccp(100,0);
         
         ter2.position = ccp(ter1.contentSize.width + 100,0);
         
-        [self addChild:ter1];
-        [self addChild:ter2];
+        ter3.position = ccp(ter1.contentSize.width * 2 + 100,0);
+        
+        [self addChild:ter1 z:1];
+        [self addChild:ter2 z:2];
+        [self addChild:ter3 z:3];
         
         self.isTouchEnabled = YES;
         
@@ -59,6 +63,14 @@
         [destTerrainSystem drawCircle:ccp(110,0) withRadius:50.0f withColor:ccc4(0, 0, 0, 0)];
         
         [destTerrainSystem drawLineFrom:ccp(50,200) endPoint:ccp(900, 200) withWidth:20.0f withColor:ccc4(0, 0, 0, 0)];
+        
+        tankSprite = [CCSprite spriteWithFile:@"Earth_Tank.png"];
+        CCLOG(@"Tank content size width = %f", tankSprite.contentSize.width * 0.50f);
+        tankSprite.anchorPoint = ccp(0.50f, 0);
+        tankSprite.position = ccp(125,700);
+        [self addChild:tankSprite z:10];
+        
+        [destTerrainSystem drawCircle:ccp(300,479) withRadius:30.0f withColor:ccc4(0, 0, 0, 0)];
         
         // Note must grab texture from the sprite itself meaning it is pointless to hold a pointer to it
         
@@ -114,7 +126,120 @@
 
 -(void)update:(ccTime)dt {
     
-   
+    CGPoint tankPOS = tankSprite.position;
+    
+    CGPoint tankColPoint = ccp(tankSprite.position.x, tankSprite.position.y);
+    
+    ccColor4B color = ccc4(0, 0, 0, 0);
+    BOOL touchedGround = YES;
+    if ([destTerrainSystem pixelAt:tankColPoint colorCache:&color]) {
+        if (color.a == 0) {
+            tankPOS.y -= 2;
+            touchedGround = NO;
+        }
+    } else {
+        tankPOS.y -= 2;
+        touchedGround = NO;
+    }
+    
+    if (touchedGround) {
+        tankPOS.x += 1.00f;
+    }
+    
+    CGPoint rightWall = ccp(tankPOS.x, tankPOS.y + 2);
+    if ([destTerrainSystem pixelAt:rightWall colorCache:&color]) {
+        if (color.a != 0) {
+            int count = 0;
+            while (color.a != 0) {
+                count++;
+                if (count > 20) break;
+                if (!([destTerrainSystem pixelAt:ccp(tankPOS.x, tankPOS.y + count) colorCache:&color])) {
+                    color.a = 0;
+                }
+            }
+            CCLOG(@"count is %d", count);
+            if (!(count > 20)) {
+                tankPOS.y += count;
+            } else {
+                tankPOS.x -= 1;
+            }
+        }
+        
+    }
+    
+    tankSprite.position = tankPOS;
+    
+    if (touchedGround) {
+        CCLOG(@"Tank touched ground.. calculating normal");
+        float avgX = 0;
+        float avgY = 0;
+       // CGPoint centerPoint = ccp(tankSprite.position.x + tankSprite.contentSize.width*0.50f, tankSprite.position.y + (2 * tankSprite.contentSize.height));
+        ccColor4B color = ccc4(0, 0, 0, 0);
+        for (int x = 25; x >=-25; x--) {
+            for (int y = 25; y >= -25; y--) {
+                CGPoint pixPt = ccp(x + tankColPoint.x, y + tankColPoint.y);
+                if ([destTerrainSystem pixelAt:pixPt colorCache:&color]) {
+                    if (color.a != 0) {
+                        avgX -= x;
+                        avgY -= y;
+                    }
+                }
+            }
+        }
+        CCLOG(@"avgX is %f   and avgY is %f", avgX, avgY);
+        float len = sqrtf(avgX * avgX + avgY * avgY);
+        if (len == 0) len = 1;
+        CGPoint normal = ccp(avgX / len, avgY / len);
+        CCLOG(@"The normal is %f, %f", normal.x, normal.y);
+    
+        float angle = ccpDot(ccp(1,0), normal);
+        
+        tankSprite.rotation = (angle * 100);
+        CCLOG(@"angle is %f", angle);
+        
+        
+    } // end if
+    
+    
+    
+    /*
+    if (touchedGround) {
+        CCLOG(@"Tank touched ground.. calculating normal");
+        NSMutableArray * vecPts = [[NSMutableArray alloc] init];
+        // CGPoint centerPoint = ccp(tankSprite.position.x + tankSprite.contentSize.width*0.50f, tankSprite.position.y + (2 * tankSprite.contentSize.height));
+        ccColor4B color = ccc4(0, 0, 0, 0);
+        for (int x = 20; x >=-20; x--) {
+            for (int y = 20; y >= -20; y--) {
+                CGPoint pixPt = ccp(x + tankColPoint.x, y + tankColPoint.y);
+                if ([destTerrainSystem pixelAt:pixPt colorCache:&color]) {
+                    if (color.a != 0) {
+                        [vecPts addObject:[NSValue valueWithCGPoint:pixPt]];
+                    }
+                }
+            }
+        }
+    
+    if (vecPts.count > 0) {
+        float xSum = 0;
+        float ySum = 0;
+        float avgX = 0;
+        float avgY = 0;
+        float len = 0;
+        
+        for (NSValue * val in vecPts) {
+            xSum += val.CGPointValue.x;
+            ySum += val.CGPointValue.y;
+        }
+        
+        avgX = xSum/vecPts.count;
+        avgY = ySum/vecPts.count;
+        CCLOG(@"Average x: %f, Average y %f", avgX, avgY);
+        len = sqrtf(avgX * avgX + avgY * avgY);
+        CGPoint normal = ccp(avgX/len, avgY/len);
+        CCLOG(@"The normal is %f, %f", normal.x, normal.y);
+    }
+    } // end if
+    */
     
 } // end update
 
@@ -202,14 +327,10 @@
 	if (now-lastDigTime>0.05f) {
 		touch=[touches anyObject];
         
-		CGPoint touchLocation = [touch locationInView:nil];
+		CGPoint touchLocation = [touch locationInView:[touch view]];
 		touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-        
-                    // activeLocation = original start of the touch
-            // touchLocation is the current touch spot
-        
-        //[self fingerAction:activeLocation :touchLocation];
-        
+        touchLocation = [self convertToNodeSpace:touchLocation];
+        [destTerrainSystem drawCircle:touchLocation withRadius:20.0f withColor:ccc4(0, 0, 0, 0)];
         lastDigTime=now;
 		
 		activeLocation=touchLocation;
@@ -217,7 +338,16 @@
 	}
 }
 
-
+-(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    UITouch * touch;
+    touch = [touches anyObject];
+    CGPoint touchLocation = [touch locationInView:[touch view]];
+    touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
+    touchLocation = [self convertToNodeSpace:touchLocation];
+    [destTerrainSystem drawCircle:touchLocation withRadius:20.0f withColor:ccc4(0, 0, 0, 0)];
+    
+}
 
 #pragma mark protocol methods
 #pragma mark -

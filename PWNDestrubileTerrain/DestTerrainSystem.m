@@ -192,6 +192,20 @@
     [ter drawSquare:squareOrigin withRadius:radius withColor:color];
 } // end drawSquare
 
+- (BOOL) pixelAt:(CGPoint) pt colorCache:(ccColor4B*)color {
+    
+    DestTerrain * ter = [self getTerrainCollision:pt];
+    
+    if (!ter) {
+        return NO;
+    } // end if
+    
+    *color = [ter pixelAt:pt];
+    
+    return YES;
+    
+} // end pixelat
+
 
 #pragma mark Delegate Methods
 #pragma mark -
@@ -230,11 +244,11 @@
             
         } // end if
         
-        CCLOG(@"origin of given point %f, %f", rect.origin.x, rect.origin.y);
-        CCLOG(@"origin of the bounding box %f, %f", [dTer boundingBox].origin.x, [dTer boundingBox].origin.y);
+        //CCLOG(@"origin of given point %f, %f", rect.origin.x, rect.origin.y);
+        //CCLOG(@"origin of the bounding box %f, %f", [dTer boundingBox].origin.x, [dTer boundingBox].origin.y);
     } // end for
     
-    CCLOG(@"No collision");
+    //CCLOG(@"No collision");
     return NULL;
     
 } // getTerrainCollision
@@ -267,7 +281,7 @@
                 [event addCollisionData:startPoint endPoint:endPoint];
                 [colList addObject:event];
                 
-                CCLOG(@"Start and End points all within one terrain piece");
+                //CCLOG(@"Start and End points all within one terrain piece");
                 return colList;
                 
             } else {
@@ -281,7 +295,7 @@
         if (CGRectIntersectsRect(endRect, boundingBoxOfTerrain)) {
             // End point intersects with terrain but not start point
             // Must determine the intersection point
-                CCLOG(@"End intersects but start does not");
+                //CCLOG(@"End intersects but start does not");
                 
                 
                 // Need to determine where the line intersects from start point
