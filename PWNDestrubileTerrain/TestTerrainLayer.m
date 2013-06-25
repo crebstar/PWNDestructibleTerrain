@@ -126,6 +126,7 @@
 
 -(void)update:(ccTime)dt {
     
+    // This logic block should be handled in the sprite class
     CGPoint tankPOS = tankSprite.position;
     
     CGPoint tankColPoint = ccp(tankSprite.position.x, tankSprite.position.y);
@@ -146,7 +147,8 @@
         tankPOS.x += 0.75f;
     }
     
-    
+    // can this be moved to dest terrain system?
+    // or is this logic belonging in the sprite
     CGPoint rightWall = ccp(tankPOS.x, tankPOS.y + 1);
     if ([destTerrainSystem pixelAt:rightWall colorCache:&color]) {
         if (color.a != 0) {
@@ -184,73 +186,6 @@
     } // end if
     
 } // end update
-
-/*
--(void)fingerAction:(CGPoint)startPoint :(CGPoint)currentPoint {
-    
-    //
-    // startPoint is the original touch location
-    // currentPoint is the current touch location
-    
-    // Create pointer to ground for size calculations?
-    CCSprite *sprite=[grounds objectAtIndex:0];
-    
-    //Find which strips of ground are invovled
-    float maxY,minY;
-    
-    if (currentPoint.y < startPoint.y) {
-        // The current touch location is below start touch location
-        minY = currentPoint.y - (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
-        maxY = startPoint.y + (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
-        
-    } else {
-        // The current touch location is above the start touch location
-        minY = startPoint.y - (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
-        maxY = currentPoint.y + (int) (DRAW_WIDTH * GROUND_SCALE + 0.5f);
-        
-    } // end if
-    
-    float groundHeight = sprite.contentSize.height*sprite.scaleY;
-    float offsetMin=(sprite.position.y + groundHeight/2) - minY;
-    
-    // Restrict min index to be within ground array bounds
-    int idxMin=offsetMin/groundHeight;
-    if (idxMin<0) idxMin=0;
-    if (idxMin >= grounds.count) idxMin=grounds.count-1;
-    
-    // Restrict max index to be within ground array bounds
-    float offsetMax = (sprite.position.y + groundHeight/2)-maxY;
-    int idxMax=offsetMax/groundHeight;
-    if (idxMax<0) idxMax=0;
-    if (idxMax>=grounds.count) idxMax=grounds.count-1;
-    
-    // At this point we have the index values for the ground segments involved
-    
-
-    
-    for (int i=idxMax; i<=idxMin; i++) {
-        sprite=[grounds objectAtIndex:i];
-        // For each ground segment
-
-        // sprite = groundSprite
-        
-        // CURRENT TOUCH POINT
-        // These contentSize.height/2 calculations aren't needed if we use anchor point of 0,0
-        CGPoint local = ccp(currentPoint.x, (currentPoint.y - sprite.position.y) + sprite.contentSize.height/2);
-        local.y = sprite.contentSize.height-local.y;
-        
-        // START TOUCH POINT
-        CGPoint activeLocal = ccp(startPoint.x , (startPoint.y - sprite.position.y) + sprite.contentSize.height/2);
-        activeLocal.y = sprite.contentSize.height-activeLocal.y;
-        
-        // Draw line with width (currentColor has an alpha value of 0)
-        CCMutableTexture2D* groundMutableTexture=(CCMutableTexture2D*)(sprite.texture);
-        [groundMutableTexture drawLineFrom:activeLocal to:local withLineWidth:DRAW_WIDTH andColor:currentColor];
-        [groundMutableTexture apply]; //Redraw texture
-    }
-}
-*/
-
 
 #pragma mark Touch Methods
 #pragma mark -

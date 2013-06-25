@@ -226,30 +226,7 @@
 } // end shouldApplyAfterEachDraw
 
 -(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withRect:(CGRect)area {
-   /*
-    CCLOG(@"Tank touched ground.. calculating normal");
-    float avgX = 0;
-    float avgY = 0;
-    // CGPoint centerPoint = ccp(tankSprite.position.x + tankSprite.contentSize.width*0.50f, tankSprite.position.y + (2 * tankSprite.contentSize.height));
-    ccColor4B color = ccc4(0, 0, 0, 0);
-    for (int x = 25; x >=-25; x--) {
-    for (int y = 25; y >=-25; y--) {
-    CGPoint pixPt = ccp(x + tankColPoint.x, y + tankColPoint.y);
-    if ([destTerrainSystem pixelAt:pixPt colorCache:&color]) {
-    if (color.a != 0) {
-    avgX -= x;
-    avgY -= y;
-    }
-    }
-    }
-    }
-    CCLOG(@"avgX is %f   and avgY is %f", avgX, avgY);
-    float len = sqrtf(avgX * avgX + avgY * avgY);
-    if (len == 0) len = 1;
-    CGPoint normal = ccp(avgX / len, avgY / len);
-    CCLOG(@"The normal is %f, %f", normal.x, normal.y);
-    
-    */
+
     float avgX = 0;
     float avgY = 0;
     ccColor4B color = ccc4(0, 0, 0, 0);
