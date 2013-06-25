@@ -134,19 +134,20 @@
     BOOL touchedGround = YES;
     if ([destTerrainSystem pixelAt:tankColPoint colorCache:&color]) {
         if (color.a == 0) {
-            tankPOS.y -= 2;
+            tankPOS.y -= 1;
             touchedGround = NO;
         }
     } else {
-        tankPOS.y -= 2;
+        tankPOS.y -= 1;
         touchedGround = NO;
     }
     
     if (touchedGround) {
-        tankPOS.x += 1.00f;
+        tankPOS.x += 0.75f;
     }
     
-    CGPoint rightWall = ccp(tankPOS.x, tankPOS.y + 2);
+    
+    CGPoint rightWall = ccp(tankPOS.x, tankPOS.y + 1);
     if ([destTerrainSystem pixelAt:rightWall colorCache:&color]) {
         if (color.a != 0) {
             int count = 0;
@@ -170,76 +171,17 @@
     tankSprite.position = tankPOS;
     
     if (touchedGround) {
-        CCLOG(@"Tank touched ground.. calculating normal");
-        float avgX = 0;
-        float avgY = 0;
-       // CGPoint centerPoint = ccp(tankSprite.position.x + tankSprite.contentSize.width*0.50f, tankSprite.position.y + (2 * tankSprite.contentSize.height));
-        ccColor4B color = ccc4(0, 0, 0, 0);
-        for (int x = 25; x >=-25; x--) {
-            for (int y = 25; y >=-25; y--) {
-                CGPoint pixPt = ccp(x + tankColPoint.x, y + tankColPoint.y);
-                if ([destTerrainSystem pixelAt:pixPt colorCache:&color]) {
-                    if (color.a != 0) {
-                        avgX -= x;
-                        avgY -= y;
-                    }
-                }
-            }
+        float angle;
+        CGPoint normal = [destTerrainSystem getAverageSurfaceNormalAt:tankColPoint
+                                                             withRect:CGRectMake(0, 0, 23, 23)];
+        angle = 100 * ccpDot(ccp(1,0), normal);
+        if (angle < -75) {
+            tankSprite.rotation = -75;
+        } else {
+            tankSprite.rotation = angle;
         }
-        CCLOG(@"avgX is %f   and avgY is %f", avgX, avgY);
-        float len = sqrtf(avgX * avgX + avgY * avgY);
-        if (len == 0) len = 1;
-        CGPoint normal = ccp(avgX / len, avgY / len);
-        CCLOG(@"The normal is %f, %f", normal.x, normal.y);
-    
-        float angle = ccpDot(ccp(1,0), normal);
-        
-        tankSprite.rotation = (angle * 100);
         CCLOG(@"angle is %f", angle);
-        
-        
     } // end if
-    
-    
-    
-    /*
-    if (touchedGround) {
-        CCLOG(@"Tank touched ground.. calculating normal");
-        NSMutableArray * vecPts = [[NSMutableArray alloc] init];
-        // CGPoint centerPoint = ccp(tankSprite.position.x + tankSprite.contentSize.width*0.50f, tankSprite.position.y + (2 * tankSprite.contentSize.height));
-        ccColor4B color = ccc4(0, 0, 0, 0);
-        for (int x = 20; x >=-20; x--) {
-            for (int y = 20; y >= -20; y--) {
-                CGPoint pixPt = ccp(x + tankColPoint.x, y + tankColPoint.y);
-                if ([destTerrainSystem pixelAt:pixPt colorCache:&color]) {
-                    if (color.a != 0) {
-                        [vecPts addObject:[NSValue valueWithCGPoint:pixPt]];
-                    }
-                }
-            }
-        }
-    
-    if (vecPts.count > 0) {
-        float xSum = 0;
-        float ySum = 0;
-        float avgX = 0;
-        float avgY = 0;
-        float len = 0;
-        
-        for (NSValue * val in vecPts) {
-            xSum += val.CGPointValue.x;
-            ySum += val.CGPointValue.y;
-        }
-        
-        avgX = xSum/vecPts.count;
-        avgY = ySum/vecPts.count;
-        CCLOG(@"Average x: %f, Average y %f", avgX, avgY);
-        len = sqrtf(avgX * avgX + avgY * avgY);
-        CGPoint normal = ccp(avgX/len, avgY/len);
-        CCLOG(@"The normal is %f, %f", normal.x, normal.y);
-    }
-    } // end if
-    */
     
 } // end update
 

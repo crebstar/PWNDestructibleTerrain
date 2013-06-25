@@ -225,6 +225,59 @@
     
 } // end shouldApplyAfterEachDraw
 
+-(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withRect:(CGRect)area {
+   /*
+    CCLOG(@"Tank touched ground.. calculating normal");
+    float avgX = 0;
+    float avgY = 0;
+    // CGPoint centerPoint = ccp(tankSprite.position.x + tankSprite.contentSize.width*0.50f, tankSprite.position.y + (2 * tankSprite.contentSize.height));
+    ccColor4B color = ccc4(0, 0, 0, 0);
+    for (int x = 25; x >=-25; x--) {
+    for (int y = 25; y >=-25; y--) {
+    CGPoint pixPt = ccp(x + tankColPoint.x, y + tankColPoint.y);
+    if ([destTerrainSystem pixelAt:pixPt colorCache:&color]) {
+    if (color.a != 0) {
+    avgX -= x;
+    avgY -= y;
+    }
+    }
+    }
+    }
+    CCLOG(@"avgX is %f   and avgY is %f", avgX, avgY);
+    float len = sqrtf(avgX * avgX + avgY * avgY);
+    if (len == 0) len = 1;
+    CGPoint normal = ccp(avgX / len, avgY / len);
+    CCLOG(@"The normal is %f, %f", normal.x, normal.y);
+    
+    */
+    float avgX = 0;
+    float avgY = 0;
+    ccColor4B color = ccc4(0, 0, 0, 0);
+    CGPoint normal;
+    float len;
+    
+    for (int w = area.size.width; w >= -area.size.width; w--) {
+        for (int h = area.size.height; h >= -area.size.height; h--) {
+            CGPoint pixPt = ccp(w + pt.x, h + pt.y);
+            if ([self pixelAt:pixPt colorCache:&color]) {
+                if (color.a != 0) {
+                    avgX -= w;
+                    avgY -= h;
+                } // end inner if
+            } // end outer if
+        } // end inner for
+    } // end outer for
+    
+    len = sqrtf(avgX * avgX + avgY * avgY);
+    if (len == 0) {
+        normal = ccp(avgX, avgY);
+    } else {
+        normal = ccp(avgX/len, avgY/len);
+    } // end if
+    
+    return normal;
+} // end get
+
 #pragma mark Collisions
 #pragma mark
 
