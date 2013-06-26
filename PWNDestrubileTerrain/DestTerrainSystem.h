@@ -57,4 +57,6 @@
 
 -(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withRect:(CGRect)area;
 
+-(void)collapseAllTerrain;
+
 @end

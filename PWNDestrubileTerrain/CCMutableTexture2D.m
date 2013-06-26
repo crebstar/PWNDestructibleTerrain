@@ -885,6 +885,40 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
     }
 }
 
+-(void)collapseAllPixels {
+    
+    for (int x = 0; x < width_; x++) {
+        bool nonAlphaFound = false;
+        CGPoint start;
+        CGPoint end;
+        for (int y = 0; y < height_; y++) {
+            if ([self pixelAt:ccp(x,y)].a != 0) {
+                if (!nonAlphaFound) {
+                    start = ccp(x,y);
+                    nonAlphaFound = true;
+                }
+            } else {
+                if (nonAlphaFound) {
+                    end = ccp(x,(y - 1));
+                    // Make call to collapse terrain with start and end
+                    //[self drawVerticalLine:start.y endY:end.y atX:x withColor:ccc4(100, 100, 100, 100)];
+                    int yidx = y;
+                    int starty = start.y;
+                    while (([self pixelAt:ccp(x,yidx)].a == 0) && (yidx < height_)) {
+                        
+                        [self setPixelAt:ccp(x,yidx) rgba:[self pixelAt:ccp(x,starty)]];
+                        
+                        yidx++;
+                        starty++;
+                    }
+                    break;
+                }
+            }
+        } // end inner for
+    } // end outer for 
+    
+}
+
 - (Boolean) apply {
 	if(!dirty_) return NO;
 	if(!data_) return NO;

@@ -12,6 +12,13 @@
 #import "DestTerrain.h"
 #import "CCMutableTexture2D.h"
 
+// TODO
+// rewrite collapse to go from bottom up
+// HAve collapse move one pixel at a time over time to simulate collapsing effect with gravity
+// Only collapse when it is being altered and have each game loop iter move a pixel down at a time
+// have a bollean for collapsing and an outside function calling an inside function
+
+// Consider having tank's angle only calculated with how the tank edges touch the surface
 
 
 @interface TestTerrainLayer ()
@@ -39,6 +46,10 @@
         
         destTerrainSystem = [[DestTerrainSystem alloc] init];
         [destTerrainSystem setApplyAfterDraw:YES];
+        
+        tankCol = [CCSprite spriteWithFile:@"Earth_Tank.png"];
+        tankCol.position = ccp(900,600);
+        [self addChild:tankCol];
         
         // consider z value as well
         DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
@@ -71,6 +82,8 @@
         [self addChild:tankSprite z:10];
         
         [destTerrainSystem drawCircle:ccp(300,479) withRadius:30.0f withColor:ccc4(0, 0, 0, 0)];
+        
+        //[destTerrainSystem collapseAllTerrain];
         
         // Note must grab texture from the sprite itself meaning it is pointless to hold a pointer to it
         
@@ -149,6 +162,7 @@
     
     // can this be moved to dest terrain system?
     // or is this logic belonging in the sprite
+    // Leaning towards it belonging to sprite
     CGPoint rightWall = ccp(tankPOS.x, tankPOS.y + 1);
     if ([destTerrainSystem pixelAt:rightWall colorCache:&color]) {
         if (color.a != 0) {
@@ -172,6 +186,7 @@
     
     tankSprite.position = tankPOS;
     
+    // need to test moving in both directions
     if (touchedGround) {
         float angle;
         CGPoint normal = [destTerrainSystem getAverageSurfaceNormalAt:tankColPoint
@@ -197,7 +212,6 @@
      I might try to push it more later with a smaller time interval
      */
 	UITouch *touch;
-	NSArray *allTouches = [[event allTouches] allObjects];
     
 	double now=[NSDate timeIntervalSinceReferenceDate];
     //Draw only every 0.05 seconds to preserve the performance
@@ -223,6 +237,11 @@
     touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
     touchLocation = [self convertToNodeSpace:touchLocation];
     [destTerrainSystem drawCircle:touchLocation withRadius:20.0f withColor:ccc4(0, 0, 0, 0)];
+    
+    CGRect touchPoint = CGRectMake(touchLocation.x, touchLocation.y, 2.0f, 2.0f);
+    if (CGRectIntersectsRect(touchPoint, tankCol.boundingBox)) {
+        [destTerrainSystem collapseAllTerrain];
+    }
     
 }
 

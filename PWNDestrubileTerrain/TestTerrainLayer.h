@@ -22,6 +22,7 @@
     CGPoint activeLocation;
     
     CCSprite * tankSprite;
+    CCSprite * tankCol;
     
 } // end ivars
 

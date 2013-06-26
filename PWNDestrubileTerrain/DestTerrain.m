@@ -163,6 +163,15 @@
     
 } // end pixelAt
 
+
+-(void)collapseTerrain {
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    [terrainTexture collapseAllPixels];
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
+    
+}
+
 #pragma mark Overrides
 #pragma mark -
 

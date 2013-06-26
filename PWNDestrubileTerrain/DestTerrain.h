@@ -53,6 +53,8 @@
 
 - (ccColor4B) pixelAt:(CGPoint) pt;
 
+-(void)collapseTerrain;
+
 
 
 @end

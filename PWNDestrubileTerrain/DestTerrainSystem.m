@@ -206,6 +206,13 @@
     
 } // end pixelat
 
+-(void)collapseAllTerrain {
+    
+    for (NSNumber * key in self.terrainPieces) {
+        [[self.terrainPieces objectForKey:key] collapseTerrain];
+    }
+    
+}
 
 #pragma mark Delegate Methods
 #pragma mark -
