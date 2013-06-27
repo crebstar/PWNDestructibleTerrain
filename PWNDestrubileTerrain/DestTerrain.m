@@ -172,6 +172,15 @@
     
 }
 
+-(bool)collapseSinglePixel {
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    bool didCol =  [terrainTexture collapseSinglePixel];
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
+    return didCol;
+    
+}
+
 #pragma mark Overrides
 #pragma mark -
 

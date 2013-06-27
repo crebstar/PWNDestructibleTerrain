@@ -174,7 +174,7 @@
                     color.a = 0;
                 }
             }
-            CCLOG(@"count is %d", count);
+            //CCLOG(@"count is %d", count);
             if (!(count > 20)) {
                 tankPOS.y += count;
             } else {
@@ -197,8 +197,10 @@
         } else {
             tankSprite.rotation = angle;
         }
-        CCLOG(@"angle is %f", angle);
+        //CCLOG(@"angle is %f", angle);
     } // end if
+    
+    [destTerrainSystem collapseSinglePixel];
     
 } // end update
 
@@ -240,7 +242,7 @@
     
     CGRect touchPoint = CGRectMake(touchLocation.x, touchLocation.y, 2.0f, 2.0f);
     if (CGRectIntersectsRect(touchPoint, tankCol.boundingBox)) {
-        [destTerrainSystem collapseAllTerrain];
+        [destTerrainSystem collapseSinglePixel];
     }
     
 }

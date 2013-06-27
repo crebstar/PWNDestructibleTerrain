@@ -124,6 +124,7 @@
 
 -(void)collapseAllPixels;
 
+-(bool)collapseSinglePixel;
 
 ///
 //	Apply actually updates the texture with any new data we added.

@@ -59,4 +59,6 @@
 
 -(void)collapseAllTerrain;
 
+-(bool)collapseSinglePixel;
+
 @end

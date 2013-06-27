@@ -362,8 +362,15 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 {
 	ccColor4B c = {0, 0, 0, 0};
 	if(!data_) return c;
-	if(pt.x < 0 || pt.y < 0) return c;
-	if(pt.x >= size_.width || pt.y >= size_.height) return c;
+	if(pt.x < 0 || pt.y < 0)  {
+        //CCLOG(@"X OR Y IS LESS THAN ZERO x=%f , y=%f", pt.x, pt.y);
+        return c;
+    }
+	if(pt.x >= size_.width || pt.y >= size_.height) {
+        //CCLOG(@"size_.width = %f  AND size_.height = %f", size_.width, size_.height);
+        //CCLOG(@"X OR Y IS GREATER THAN WIDTH/HEIGHT x=%f , y=%f", pt.x, pt.y);
+        return c;
+    }
     
 	uint x = pt.x, y = pt.y;
     
@@ -907,17 +914,50 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
                     while (([self pixelAt:ccp(x,yidx)].a == 0) && (yidx < height_)) {
                         
                         [self setPixelAt:ccp(x,yidx) rgba:[self pixelAt:ccp(x,starty)]];
+                        [self setPixelAt:ccp(x, starty) rgba:ccc4(0, 0, 0, 0)];
                         
                         yidx++;
                         starty++;
                     }
-                    break;
+                break;
                 }
             }
         } // end inner for
     } // end outer for 
     
 }
+
+-(bool)collapseSinglePixel {
+    
+    bool didCollapse = false;
+   
+    for (int x = 0; x < size_.width; x++) {
+        bool shouldShift = false;
+        bool alphaFound = false;
+        for (int y = (size_.height -1); y >= 0; y--) {
+            if (!shouldShift) {
+                if ([self pixelAt:ccp(x,y)].a == 0) {
+                    // Need to shift all pixels above one down
+                    alphaFound = true;
+                } else if (alphaFound) {
+                    didCollapse = shouldShift = true;
+                    // Ensure the top pixel is alpha'ed out if a collapse will occur
+                    [self setPixelAt:ccp(x,0) rgba:ccc4(0, 0, 0, 0)];
+                    [self setPixelAt:ccp(x,(y+1)) rgba:[self pixelAt:ccp(x,y)]];
+                } // end inner if
+            } else {
+                // Need to shift pixels down one
+                [self setPixelAt:ccp(x,(y+1)) rgba:[self pixelAt:ccp(x,y)]];
+            } // end if
+            
+        } // end inner for
+    } // end outer for
+    
+    ccColor4B color = [self pixelAt:ccp(0,height_-1)];
+    CCLOG(@"Pixel at bottom is %d, %d, %d, %d", color.a, color.r, color.g, color.b);
+    CCLOG(@"height is %d", height_);
+    return didCollapse;
+} // end collapseSinglePixel
 
 - (Boolean) apply {
 	if(!dirty_) return NO;

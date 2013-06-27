@@ -214,6 +214,16 @@
     
 }
 
+-(bool)collapseSinglePixel {
+    
+    bool didCol = false;
+    for (NSNumber * key in self.terrainPieces) {
+        didCol = [[self.terrainPieces objectForKey:key] collapseSinglePixel];
+        
+    }
+    return didCol;
+}
+
 #pragma mark Delegate Methods
 #pragma mark -
 
@@ -261,6 +271,8 @@
     
     return normal;
 } // end get
+
+
 
 #pragma mark Collisions
 #pragma mark
