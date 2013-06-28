@@ -13,7 +13,9 @@
 #import "CCMutableTexture2D.h"
 
 // TODO
-// rewrite collapse to go from bottom up
+// Use a dynamic programming approach to terrain collapsing. Cache the columns that have been altered
+// with booleans and check if a given column needs to be collapsed or not
+// This will require logic in any terrain altering method to specify which columns it modified
 // HAve collapse move one pixel at a time over time to simulate collapsing effect with gravity
 // Only collapse when it is being altered and have each game loop iter move a pixel down at a time
 // have a bollean for collapsing and an outside function calling an inside function
@@ -73,7 +75,7 @@
         
         [destTerrainSystem drawCircle:ccp(110,0) withRadius:50.0f withColor:ccc4(0, 0, 0, 0)];
         
-        [destTerrainSystem drawLineFrom:ccp(50,200) endPoint:ccp(900, 200) withWidth:20.0f withColor:ccc4(0, 0, 0, 0)];
+        //[destTerrainSystem drawLineFrom:ccp(50,200) endPoint:ccp(900, 200) withWidth:20.0f withColor:ccc4(0, 0, 0, 0)];
         
         tankSprite = [CCSprite spriteWithFile:@"Earth_Tank.png"];
         CCLOG(@"Tank content size width = %f", tankSprite.contentSize.width * 0.50f);
@@ -189,8 +191,8 @@
     // need to test moving in both directions
     if (touchedGround) {
         float angle;
-        CGPoint normal = [destTerrainSystem getAverageSurfaceNormalAt:tankColPoint
-                                                             withRect:CGRectMake(0, 0, 23, 23)];
+        //CGPoint normal = [destTerrainSystem getAverageSurfaceNormalAt:tankColPoint withSquareWidth:23];
+        CGPoint normal = [destTerrainSystem getSurfaceNormalAt:tankColPoint withSquareWidth:23];
         angle = 100 * ccpDot(ccp(1,0), normal);
         if (angle < -75) {
             tankSprite.rotation = -75;

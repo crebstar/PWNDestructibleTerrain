@@ -36,6 +36,9 @@
 	GLushort colorGLushort;
 	GLubyte colorGLubyte;
 	CGPoint *poly;
+    
+    // Modified Columns Cache
+    NSMutableSet * alteredColumns;
 }
 @property (readonly) CGPoint *poly;
 //	Returns the maximum allowed texture size
@@ -125,6 +128,8 @@
 -(void)collapseAllPixels;
 
 -(bool)collapseSinglePixel;
+
+-(void)showLogAlteredColumnsCache;
 
 ///
 //	Apply actually updates the texture with any new data we added.

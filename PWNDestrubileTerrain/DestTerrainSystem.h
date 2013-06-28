@@ -55,7 +55,9 @@
 
 - (BOOL)pixelAt:(CGPoint) pt colorCache:(ccColor4B*)color;
 
--(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withRect:(CGRect)area;
+-(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withSquareWidth:(int)area;
+
+-(CGPoint)getSurfaceNormalAt:(CGPoint)pt withSquareWidth:(int)area;
 
 -(void)collapseAllTerrain;
 

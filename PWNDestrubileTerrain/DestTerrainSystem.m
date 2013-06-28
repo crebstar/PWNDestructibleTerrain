@@ -242,7 +242,7 @@
     
 } // end shouldApplyAfterEachDraw
 
--(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withRect:(CGRect)area {
+-(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withSquareWidth:(int)area {
 
     float avgX = 0;
     float avgY = 0;
@@ -250,8 +250,8 @@
     CGPoint normal;
     float len;
     
-    for (int w = area.size.width; w >= -area.size.width; w--) {
-        for (int h = area.size.height; h >= -area.size.height; h--) {
+    for (int w = area; w >= -area; w = w - 2) {
+        for (int h = area; h >= -area; h = h - 2) {
             CGPoint pixPt = ccp(w + pt.x, h + pt.y);
             if ([self pixelAt:pixPt colorCache:&color]) {
                 if (color.a != 0) {
@@ -271,6 +271,45 @@
     
     return normal;
 } // end get
+
+-(CGPoint)getSurfaceNormalAt:(CGPoint)pt withSquareWidth:(int)area {
+    // This method only looks at surface pixels
+    
+    int avgX = 0;
+    int avgY = 0;
+    CGPoint normal;
+    float len;
+    ccColor4B color = ccc4(0, 0, 0, 0);
+    
+    for (int w = area; w >= -area; w--) {
+        int h = area;
+        do {
+            if ([self pixelAt:ccp(w + pt.x, h + pt.y) colorCache:&color]) {
+                if (color.a != 0) {
+                    if (w < 0) {
+                        avgX -= w;
+                        avgY -= h;
+                    } else {
+                        avgX += w;
+                        avgY += h;
+                    }
+                    break;
+                } // end inner if
+            } // end outer if
+            h--;
+        } while (h >= -area);
+    } // end for
+    int perpX = -avgY;
+    int perpY = avgX;
+    len = sqrtf(perpX * perpX + perpY * perpY);
+    if (len == 0) {
+        normal = ccp(perpX, perpY);
+    } else {
+        normal = ccp(perpX/len, perpY/len);
+    } // end if
+    
+    return normal;
+}
 
 
 

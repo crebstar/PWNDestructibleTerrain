@@ -1,10 +1,3 @@
-//
-//  CCMutableTexture2D.m
-//  SpaceTankWars
-//
-//  Created by Paul Renton on 6/1/13.
-//
-//
 
 ///
 //	All info located in header.
@@ -104,6 +97,7 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 	CGImageRef				image;
 	BOOL					sizeToFit = NO;
     
+    alteredColumns = [[NSMutableSet alloc] init];
     
 	image = [uiImage CGImage];
     
@@ -461,6 +455,8 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 		return NO;
 	}
     
+    [alteredColumns addObject:[NSNumber numberWithInt:x]];
+    
 	return YES;
 }
 
@@ -468,8 +464,7 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 	if(!data_) return;
 	int y=yF;
 	if ((y<0) || (y >= size_.height)) return;
-    
-    
+
 	int xMin, xMax;
 	if (x0>x1) {
 		xMin=x1;
@@ -504,6 +499,13 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 			pixelGLubyte[offset] = colorGLubyte;
 		}
 	}
+    
+    // Cache the column values
+    
+    for (int col = xMin; col <= xMax; col++) {
+        [alteredColumns addObject:[NSNumber numberWithInt:col]];
+    }
+    
 }
 
 
@@ -583,6 +585,8 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
         
 	} // end if
     
+    [alteredColumns addObject:[NSNumber numberWithInt:xF]];
+    
 } // end drawVerticalLine
 
 
@@ -645,6 +649,9 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 		} // end for
         
 	} // end if
+    
+    // No need to cache here since it modifies pixels from a point in col to top
+    
 } // end drawVerticalLine
 
 
@@ -681,6 +688,13 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
         
     } // end while
     
+    // Cache the altered col values
+    for (int col = circleOrigin.x - radius; col <= circleOrigin.x + radius; col++) {
+        if (col < 0 || col >= size_.width) continue;
+        [alteredColumns addObject:[NSNumber numberWithInt:col]];
+    } // end for
+
+    
 } // end draw circle
 
 -(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color {
@@ -706,6 +720,12 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
         } // end if
         
     } // end while
+    
+    // Cache the altered columns
+    for (int col = squareOrigin.x - radius; col <= squareOrigin.x + radius; col++) {
+        if (col < 0 || col >= size_.width) continue;
+        [alteredColumns addObject:[NSNumber numberWithInt:col]];
+    } // end for
     
 } //endDrawSquare
 
@@ -793,10 +813,7 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 	CGPoint perp=ccpPerp(vector);
 	CGPoint midPerp=ccpPerp(midVector);
     
-    
-    
 	//int n=10;
-    
 	//CGPoint *poly = calloc( sizeof(CGPoint) * n, 1 );
 	int i=0;
 	poly[i]=ccpSub(ccpSub(p0,midVector),midPerp); i++;
@@ -930,8 +947,10 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 -(bool)collapseSinglePixel {
     
     bool didCollapse = false;
-   
-    for (int x = 0; x < size_.width; x++) {
+    
+//    for (int x = 0; x < size_.width; x++) {
+    for (NSNumber * col in [alteredColumns allObjects]) {
+        int x = col.intValue;
         bool shouldShift = false;
         bool alphaFound = false;
         for (int y = (size_.height -1); y >= 0; y--) {
@@ -949,15 +968,29 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
                 // Need to shift pixels down one
                 [self setPixelAt:ccp(x,(y+1)) rgba:[self pixelAt:ccp(x,y)]];
             } // end if
-            
         } // end inner for
+        // Remove column from cache if no pixels collapsed
+        if (!shouldShift) [alteredColumns removeObject:col];
     } // end outer for
     
-    ccColor4B color = [self pixelAt:ccp(0,height_-1)];
-    CCLOG(@"Pixel at bottom is %d, %d, %d, %d", color.a, color.r, color.g, color.b);
-    CCLOG(@"height is %d", height_);
     return didCollapse;
 } // end collapseSinglePixel
+
+-(void)showLogAlteredColumnsCache {
+    // For debugging purposes
+    
+    if (!alteredColumns) {
+        CCLOG(@"There are no altered columns in the cache for this texture");
+        return;
+    }
+    
+    
+    for (NSNumber * col in [alteredColumns allObjects]) {
+        CCLOG(@"column %d", [col intValue]);
+    }
+   
+    
+}
 
 - (Boolean) apply {
 	if(!dirty_) return NO;
