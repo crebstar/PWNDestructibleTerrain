@@ -125,6 +125,8 @@
 
 -(void)drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color;
 
+-(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color;
+
 -(void)collapseAllPixels;
 
 -(bool)collapseSinglePixel;

@@ -693,9 +693,44 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
         if (col < 0 || col >= size_.width) continue;
         [alteredColumns addObject:[NSNumber numberWithInt:col]];
     } // end for
-
     
 } // end draw circle
+
+-(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    // Similiar to draw circle but creates a charing effect
+    
+    [self drawCircle:explosionOrigin withRadius:radius withColor:color];
+    
+    for (int w = radius; w >= -radius; w--) {
+        int h = 0;
+        int ranPixAmt = 3; //arc4random() is possibility as well here
+        do {
+            if ([self pixelAt:ccp(w + explosionOrigin.x, explosionOrigin.y - h)].a != 0) {
+                // Found a ground pixel
+                for (int p = 0; p <= ranPixAmt; p++) {
+                    switch (p) {
+                        case 0:
+                            [self setPixelAt:ccp(w + explosionOrigin.x, explosionOrigin.y - p - h) rgba:ccc4(4, 4, 4, 250)];
+                            break;
+                        case 1:
+                            [self setPixelAt:ccp(w + explosionOrigin.x, explosionOrigin.y - p - h) rgba:ccc4(16, 16, 16, 250)];
+                            break;
+                        case 2:
+                            [self setPixelAt:ccp(w + explosionOrigin.x, explosionOrigin.y - p - h) rgba:ccc4(25, 25, 25, 250)];
+                            break;
+                        case 3:
+                            [self setPixelAt:ccp(w + explosionOrigin.x, explosionOrigin.y - p - h) rgba:ccc4(51, 51, 51, 250)];
+                            break;
+                    }
+                }
+                break;
+            }
+            h--;
+        } while (h >= (-radius-3));
+    }
+    
+    
+}
 
 -(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color {
     
@@ -947,9 +982,7 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 -(bool)collapseSinglePixel {
     
     bool didCollapse = false;
-    
-//    for (int x = 0; x < size_.width; x++) {
-    for (NSNumber * col in [alteredColumns allObjects]) {
+        for (NSNumber * col in [alteredColumns allObjects]) {
         int x = col.intValue;
         bool shouldShift = false;
         bool alphaFound = false;

@@ -53,9 +53,11 @@
 
 -(void)drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color;
 
+-(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color;
+
 - (BOOL)pixelAt:(CGPoint) pt colorCache:(ccColor4B*)color;
 
--(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withSquareWidth:(int)area;
+-(CGPoint)getAverageSurfaceNormalOfAreaAt:(CGPoint)pt withSquareWidth:(int)area;
 
 -(CGPoint)getSurfaceNormalAt:(CGPoint)pt withSquareWidth:(int)area;
 

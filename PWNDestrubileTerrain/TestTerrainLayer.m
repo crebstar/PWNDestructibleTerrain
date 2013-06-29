@@ -53,6 +53,12 @@
         tankCol.position = ccp(900,600);
         [self addChild:tankCol];
         
+        // BG
+        CCSprite * bg = [CCSprite spriteWithFile:@"Moon_Sample_Background.png"];
+        bg.anchorPoint = ccp(0,0);
+        bg.position = ccp(0,0);
+        [self addChild:bg z:-20];
+        
         // consider z value as well
         DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
         DestTerrain * ter2 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:1];
@@ -191,8 +197,8 @@
     // need to test moving in both directions
     if (touchedGround) {
         float angle;
-        //CGPoint normal = [destTerrainSystem getAverageSurfaceNormalAt:tankColPoint withSquareWidth:23];
-        CGPoint normal = [destTerrainSystem getSurfaceNormalAt:tankColPoint withSquareWidth:23];
+        CGPoint normal = [destTerrainSystem getAverageSurfaceNormalOfAreaAt:tankColPoint withSquareWidth:23];
+        //CGPoint normal = [destTerrainSystem getSurfaceNormalAt:tankColPoint withSquareWidth:23];
         angle = 100 * ccpDot(ccp(1,0), normal);
         if (angle < -75) {
             tankSprite.rotation = -75;
@@ -225,7 +231,7 @@
 		CGPoint touchLocation = [touch locationInView:[touch view]];
 		touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
         touchLocation = [self convertToNodeSpace:touchLocation];
-        [destTerrainSystem drawCircle:touchLocation withRadius:20.0f withColor:ccc4(0, 0, 0, 0)];
+        [destTerrainSystem createExplosion:touchLocation withRadius:20.0f withColor:ccc4(0, 0, 0, 0)];
         lastDigTime=now;
 		
 		activeLocation=touchLocation;
@@ -240,7 +246,7 @@
     CGPoint touchLocation = [touch locationInView:[touch view]];
     touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
     touchLocation = [self convertToNodeSpace:touchLocation];
-    [destTerrainSystem drawCircle:touchLocation withRadius:20.0f withColor:ccc4(0, 0, 0, 0)];
+    [destTerrainSystem createExplosion:touchLocation withRadius:20.0f withColor:ccc4(0, 0, 0, 0)];
     
     CGRect touchPoint = CGRectMake(touchLocation.x, touchLocation.y, 2.0f, 2.0f);
     if (CGRectIntersectsRect(touchPoint, tankCol.boundingBox)) {

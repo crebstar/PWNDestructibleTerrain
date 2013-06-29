@@ -13,6 +13,7 @@
 		3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */; };
 		3F5363811763F7940068AAE1 /* TestSprites.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363801763F7940068AAE1 /* TestSprites.m */; };
 		3F6C28A4176E370C00046BCA /* TerCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */; };
+		3F75EF37177F3F61000CED26 /* Moon_Sample_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F75EF36177F3F61000CED26 /* Moon_Sample_Background.png */; };
 		3F7D1A811777635D00CF6558 /* Earth_Tank.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D1A801777635D00CF6558 /* Earth_Tank.png */; };
 		3FF9B0B6175A86A700C71ED8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B5175A86A700C71ED8 /* QuartzCore.framework */; };
 		3FF9B0B8175A86A700C71ED8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FF9B0B7175A86A700C71ED8 /* OpenGLES.framework */; };
@@ -186,6 +187,7 @@
 		3F5363801763F7940068AAE1 /* TestSprites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSprites.m; sourceTree = "<group>"; };
 		3F6C28A2176E370C00046BCA /* TerCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionEvent.h; sourceTree = "<group>"; };
 		3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerCollisionEvent.m; sourceTree = "<group>"; };
+		3F75EF36177F3F61000CED26 /* Moon_Sample_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Moon_Sample_Background.png; sourceTree = "<group>"; };
 		3F7D1A801777635D00CF6558 /* Earth_Tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Earth_Tank.png; sourceTree = "<group>"; };
 		3FC6A4A117697A44000FE0C6 /* TerCollisionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionHelper.h; sourceTree = "<group>"; };
 		3FF9B0B2175A86A700C71ED8 /* PWNDestructibleTerrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PWNDestructibleTerrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1033,6 +1035,7 @@
 		3FF9B3E4175BAC2F00C71ED8 /* AdditionalResources */ = {
 			isa = PBXGroup;
 			children = (
+				3F75EF36177F3F61000CED26 /* Moon_Sample_Background.png */,
 				3FF9B3E9175C3FCA00C71ED8 /* alphatest.png */,
 				3FF9B3E5175BB22400C71ED8 /* fullscreenground.png */,
 				3FF9B3E2175BAB6600C71ED8 /* grounddetailfull.png */,
@@ -1133,6 +1136,7 @@
 				3FF9B3E6175BB22400C71ED8 /* fullscreenground.png in Resources */,
 				3FF9B3EA175C3FCA00C71ED8 /* alphatest.png in Resources */,
 				3F7D1A811777635D00CF6558 /* Earth_Tank.png in Resources */,
+				3F75EF37177F3F61000CED26 /* Moon_Sample_Background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

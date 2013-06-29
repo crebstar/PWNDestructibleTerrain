@@ -192,6 +192,19 @@
     [ter drawSquare:squareOrigin withRadius:radius withColor:color];
 } // end drawSquare
 
+-(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    DestTerrain * ter = [self getTerrainCollision:explosionOrigin];
+    
+    if (!ter) {
+        //CCLOG(@"No Single Collision Detected");
+        return;
+    } // end if
+    
+    [ter createExplosion:explosionOrigin withRadius:radius withColor:color];
+    
+} // end create explosion
+
 - (BOOL) pixelAt:(CGPoint) pt colorCache:(ccColor4B*)color {
     
     DestTerrain * ter = [self getTerrainCollision:pt];
@@ -242,8 +255,8 @@
     
 } // end shouldApplyAfterEachDraw
 
--(CGPoint)getAverageSurfaceNormalAt:(CGPoint)pt withSquareWidth:(int)area {
-
+-(CGPoint)getAverageSurfaceNormalOfAreaAt:(CGPoint)pt withSquareWidth:(int)area {
+    // this method considers the complete area of pixels
     float avgX = 0;
     float avgY = 0;
     ccColor4B color = ccc4(0, 0, 0, 0);
@@ -293,20 +306,17 @@
                         avgX += w;
                         avgY += h;
                     }
-                    break;
+                    break; // Only consider first ground pixel found
                 } // end inner if
             } // end outer if
             h--;
         } while (h >= -area);
     } // end for
+    
     int perpX = -avgY;
     int perpY = avgX;
     len = sqrtf(perpX * perpX + perpY * perpY);
-    if (len == 0) {
-        normal = ccp(perpX, perpY);
-    } else {
-        normal = ccp(perpX/len, perpY/len);
-    } // end if
+    normal = ccp(perpX/len, perpY/len);
     
     return normal;
 }

@@ -51,6 +51,8 @@
 
 -(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color;
 
+-(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color;
+
 - (ccColor4B) pixelAt:(CGPoint) pt;
 
 -(void)collapseTerrain;

@@ -152,6 +152,19 @@
     
 } // end drawSquare
 
+-(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color {
+    
+    int localXOrigin = explosionOrigin.x - self.position.x;
+    int localYOrigin = self.contentSize.height - (explosionOrigin.y - self.position.y);
+    
+    CCMutableTexture2D * terrainTexture = (CCMutableTexture2D *) [self texture];
+    
+    [terrainTexture createExplosion:ccp(localXOrigin, localYOrigin) withRadius:radius withColor:color];
+    
+    if ([delegate shouldApplyAfterEachDraw] || self.applyAfterDraw) [terrainTexture apply];
+    
+}
+
 - (ccColor4B) pixelAt:(CGPoint) pt {
     
     int localXOrigin = pt.x - self.position.x;
