@@ -54,10 +54,12 @@
         [self addChild:tankCol];
         
         // BG
+        
         CCSprite * bg = [CCSprite spriteWithFile:@"Moon_Sample_Background.png"];
         bg.anchorPoint = ccp(0,0);
         bg.position = ccp(0,0);
         [self addChild:bg z:-20];
+        
         
         // consider z value as well
         DestTerrain * ter1 = [destTerrainSystem createDestTerrainWithImageName:@"fullscreenground.png" withID:0];
@@ -90,48 +92,6 @@
         [self addChild:tankSprite z:10];
         
         [destTerrainSystem drawCircle:ccp(300,479) withRadius:30.0f withColor:ccc4(0, 0, 0, 0)];
-        
-        //[destTerrainSystem collapseAllTerrain];
-        
-        // Note must grab texture from the sprite itself meaning it is pointless to hold a pointer to it
-        
-        // TESTS BELOW
-        
-        //[destTerrainSystem drawLineFrom:ccp(100,50) endPoint:ccp(550, 300) withWidth:30.0f withColor:ccc4(0, 0, 0, 0)];
-        
-        
-        /*
-        ter1.position = ccp(0,200);
-        [ter1 drawLineFrom:ter1.position
-                  endPoint:ccp(ter1.position.x + ter1.contentSize.width,
-                               ter1.position.y + ter1.contentSize.height)
-                 withWidth:20.0f
-                 withColor:ccc4(0, 0, 0, 0)];
-        
-        */
-        /*
-        for (int i = 0; i < 240; i++) {
-            
-            [ter1 drawHorizontalLine:0.0f xEnd:160.0f y:(ter1.position.y + i) withColor:ccc4(0, 0, 0, 0)];
-            
-        }
-         */
-        
-        /*
-        for (int i = 0; i < 160; i++) {
-            
-            [ter1 drawVerticalLine:self.position.y yEnd:self.position.y + self.contentSize.height/2 x:i withColor:ccc4(0, 0, 0, 0)];
-            
-        }
-         */
-        
-        /*
-        for (int i = 0; i < 200; i++) {
-            
-            [ter1 drawVerticalLineFromPointToTopEdge:self.position.y + self.contentSize.width/3 atX:i withColor:ccc4(0, 0, 0, 0)];
-            
-        }
-        */
         
         
         [self scheduleUpdate];
@@ -237,7 +197,7 @@
 		activeLocation=touchLocation;
        
 	}
-}
+} // end TouchesMoved
 
 -(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
@@ -253,15 +213,7 @@
         [destTerrainSystem collapseSinglePixel];
     }
     
-}
-
-#pragma mark protocol methods
-#pragma mark -
--(void)updatePositionWithSystem:(CGPoint)positionOfTerrain {
-    
-    
-    
-}
+} // end TouchesBegan
 
 #pragma mark helper functions
 #pragma mark -
@@ -280,7 +232,8 @@
         isRetina = NO;
         CCLOG(@"TestTerrainLayer-> The device is NOT A RETINA device");
     } // end if
-
+    
+    return isRetina;
 } // end isRetina
 
 @end

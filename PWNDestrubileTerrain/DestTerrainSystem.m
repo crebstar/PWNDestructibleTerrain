@@ -16,7 +16,6 @@
 @interface DestTerrainSystem ()
 // Private Functions
 -(void)createTerrainDict;
--(void)createGridSystem;
 -(DestTerrain *)getTerrainCollision:(CGPoint)point;
 -(NSMutableArray *)getTerrainCollisionList:(CGPoint)startPoint toEndPoint:(CGPoint)endPoint;
 
@@ -33,6 +32,7 @@
     CCLOG(@"DestTerrainSystem-> Dealloc");
     
     self.terrainPieces = nil;
+    self->alteredTerrain = nil;
     
 } // end dealloc
 
@@ -44,28 +44,17 @@
         
         [self createTerrainDict];
         
+        // Used if apply is set to NO
+        self->alteredTerrain = [[NSMutableSet alloc] init];
+        
+        self.applyAfterDraw = NO;
+        
     } // end if
     
     return self;
     
 } // end init
 
--(id)initWithGridSystem:(CGSize)levelSize {
-    // Only Init function for now
-    self = [super init];
-    
-    if (self != nil) {
-        CCLOG(@"DestTerrainSystem-> Init");
-        
-        self->levelSize = levelSize;
-        [self createTerrainDict];
-        [self createGridSystem]; // Will optmize later 
-        
-    } // end if
-    
-    return self;
-    
-} // end constructor
 
 #pragma mark Factory Methods
 #pragma mark -
@@ -107,6 +96,15 @@
     
 } // end createDestTerrainWithImageName
 
+-(void)applyTerrainChanges {
+    CCLOG(@"%d objects in alteredTerrain", [alteredTerrain count]);
+    for (DestTerrain * ter in alteredTerrain) {
+        [ter applyChanges];
+    } // end for
+    
+    [alteredTerrain removeAllObjects];
+} // end apply
+
 
 #pragma mark Wrapper Functions
 #pragma mark -
@@ -118,10 +116,13 @@
     for (int index = 0; index < [colList count]; index++) {
         
         TerCollisionEvent * event = [colList objectAtIndex:index];
-        //CCLOG(@"Collision event coords are %f, %f", event.startPoint.x, event.startPoint.y);
-        //CCLOG(@"Collision event coords are %f, %f", event.endPoint.x, event.endPoint.y);
         [event.ter drawLineFrom:event.startPoint endPoint:event.endPoint withWidth:lineWidth withColor:color];
         
+        if (!applyAfterDraw) {
+            [alteredTerrain addObject:event.ter];
+        }
+        //CCLOG(@"Collision event coords are %f, %f", event.startPoint.x, event.startPoint.y);
+        //CCLOG(@"Collision event coords are %f, %f", event.endPoint.x, event.endPoint.y);
     } // end for
     
     colList = nil;
@@ -138,6 +139,10 @@
     
     [ter drawHorizontalLine:xStart xEnd:xEnd y:yF withColor:colorToApply];
     
+    if (!applyAfterDraw) {
+        [alteredTerrain addObject:ter];
+    }
+    
 } // end drawHorizontalLine
 
 -(void)drawVerticalLine:(float)yStart yEnd:(float)yEnd x:(float)xF withColor:(ccColor4B)colorToApply {
@@ -151,6 +156,10 @@
     
     [ter drawVerticalLine:yStart yEnd:yEnd x:xF withColor:colorToApply];
     
+    if (!applyAfterDraw) {
+        [alteredTerrain addObject:ter];
+    }
+    
 } // end drawVerticalLine
 
 -(void)drawVerticalLineFromPointToTopEdge:(float)yStart atX:(float)xF withColor:(ccColor4B)colorToApply {
@@ -162,6 +171,10 @@
     } // end if
     
     [ter drawVerticalLineFromPointToTopEdge:yStart atX:xF withColor:colorToApply];
+    
+    if (!applyAfterDraw) {
+        [alteredTerrain addObject:ter];
+    }
     
 } // end drawVerticalLineFromPointToTopEdge
 
@@ -177,6 +190,10 @@
     //CCLOG(@"Single Collision Detected at %f, %f", circleOrigin.x, circleOrigin.y);
     [ter drawCircle:circleOrigin withRadius:radius withColor:color];
     
+    if (!applyAfterDraw) {
+        [alteredTerrain addObject:ter];
+    }
+    
 } // end DrawCircle
 
 -(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color {
@@ -190,6 +207,10 @@
     
     //CCLOG(@"Single Collision Detected at %f, %f", squareOrigin.x, squareOrigin.y);
     [ter drawSquare:squareOrigin withRadius:radius withColor:color];
+    
+    if (!applyAfterDraw) {
+        [alteredTerrain addObject:ter];
+    }
 } // end drawSquare
 
 -(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color {
@@ -202,6 +223,10 @@
     } // end if
     
     [ter createExplosion:explosionOrigin withRadius:radius withColor:color];
+    
+    if (!applyAfterDraw) {
+        [alteredTerrain addObject:ter];
+    }
     
 } // end create explosion
 
@@ -240,11 +265,6 @@
 #pragma mark Delegate Methods
 #pragma mark -
 
--(void)updatePositionWithSystem:(CGPoint)positionOfTerrain terID:(NSInteger)terrainID {
-    
-    // pass for now
-    
-}
 
 -(BOOL)shouldApplyAfterEachDraw {
     // If YES then it applies texture changes after each draw method
@@ -347,7 +367,7 @@
     } // end for
     
     //CCLOG(@"No collision");
-    return NULL;
+    return nil;
     
 } // getTerrainCollision
 
@@ -517,14 +537,6 @@
     } // end if
 } // end createTerrainDict
 
--(void)createGridSystem {
-    
-    // Pass for now
-    
-    
-} // end crateGridsystem
-
-
 #pragma mark Mutators
 #pragma mark -
 
@@ -541,7 +553,7 @@
     } // end if
 
     // Must assign directly to prevent infinite loop :)
-    self->applyAtEachDraw = applyAtEachDraw;
+    self.applyAfterDraw = applyAtEachDraw;
     
 } // end setApplyAtEachDraw
 

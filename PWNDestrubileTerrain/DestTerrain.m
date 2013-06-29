@@ -43,6 +43,12 @@
     
 } // end initWithIntID
 
+-(void)applyChanges {
+    // For people who want more control
+    CCMutableTexture2D * texture = (CCMutableTexture2D *) [self texture];
+    [texture apply];
+}
+
 /*
  Convenience wrapper functions. Handles conversion of points from Cocos2D to point system used by CCMutableTexture2D.
  After the conversion it calls the appropriate functions. Use these if you don't want to deal with inconvenience of
@@ -197,19 +203,6 @@
 #pragma mark Overrides
 #pragma mark -
 
--(void)setPosition:(CGPoint)position {
-    // Overrides position setter
-    // Intercepts setting of position and updates the system with the new position
-    
-    if (delegate) {
-        [delegate updatePositionWithSystem:position terID:self.terID];
-        CCLOG(@"DestTerrain-> Updating position to DestTerrainSystem");
-    } else {
-        CCLOG(@"DestTerrain-> Cannot update position to DestTerrainSystem as delegate is nil");
-    } // end if
-    
-    [super setPosition:position];
-    
-} // end setPosition
+
 
 @end

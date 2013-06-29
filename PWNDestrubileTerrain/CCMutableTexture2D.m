@@ -602,7 +602,6 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
     
     if ((x < 0) || (x >= size_.width))  {
         // The x coordinate provided falls outside the texture and therefore a line cannot be drawn
-        // Fail silently (Well sort of... There is a log statement here)
         //CCLOG(@"CCMutableTexture2D-> x coordinate cannot be less than zero or greater than the width of the texture");
         //CCLOG(@"CCMutableTexture2D-> Error :: Cannot apply drawVerticalLineEffect");
         return;
@@ -698,7 +697,7 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
 
 -(void)createExplosion:(CGPoint)explosionOrigin withRadius:(float)radius withColor:(ccColor4B)color {
     // Similiar to draw circle but creates a charing effect
-    
+    // TODO :: Make this more adaptable
     [self drawCircle:explosionOrigin withRadius:radius withColor:color];
     
     for (int w = radius; w >= -radius; w--) {
@@ -709,6 +708,7 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
                 // Found a ground pixel
                 for (int p = 0; p <= ranPixAmt; p++) {
                     switch (p) {
+                            // TODO :: Make this more adjustable
                         case 0:
                             [self setPixelAt:ccp(w + explosionOrigin.x, explosionOrigin.y - p - h) rgba:ccc4(4, 4, 4, 250)];
                             break;
@@ -721,16 +721,14 @@ static EAGLContext *mutableTextureAuxEAGLcontext = nil;
                         case 3:
                             [self setPixelAt:ccp(w + explosionOrigin.x, explosionOrigin.y - p - h) rgba:ccc4(51, 51, 51, 250)];
                             break;
-                    }
-                }
+                    } // end switch
+                } // end for
                 break;
-            }
+            } // end if
             h--;
         } while (h >= (-radius-3));
-    }
-    
-    
-}
+    } // end outer for
+} // end createExplosion
 
 -(void) drawSquare:(CGPoint)squareOrigin withRadius:(float)radius withColor:(ccColor4B)color {
     

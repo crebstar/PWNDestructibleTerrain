@@ -33,6 +33,7 @@
 
 -(id)initWithIntID:(NSInteger)terrainID withImage:(UIImage*)image;
 
+-(void)applyChanges;
 
 /*
  Convenience wrapper functions. Handles conversion of points from Cocos2D to point system used by CCMutableTexture2D.

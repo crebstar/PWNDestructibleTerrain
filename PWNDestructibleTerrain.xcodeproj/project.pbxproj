@@ -11,7 +11,6 @@
 		3F5363751763D2760068AAE1 /* DestTerrainSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363741763D2760068AAE1 /* DestTerrainSystem.m */; };
 		3F5363791763E3470068AAE1 /* TerrainTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363781763E3470068AAE1 /* TerrainTestScene.m */; };
 		3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */; };
-		3F5363811763F7940068AAE1 /* TestSprites.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F5363801763F7940068AAE1 /* TestSprites.m */; };
 		3F6C28A4176E370C00046BCA /* TerCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */; };
 		3F75EF37177F3F61000CED26 /* Moon_Sample_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F75EF36177F3F61000CED26 /* Moon_Sample_Background.png */; };
 		3F7D1A811777635D00CF6558 /* Earth_Tank.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D1A801777635D00CF6558 /* Earth_Tank.png */; };
@@ -183,8 +182,6 @@
 		3F53637A1763E3E50068AAE1 /* TestTerrainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTerrainLayer.h; sourceTree = "<group>"; };
 		3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTerrainLayer.m; sourceTree = "<group>"; };
 		3F53637D1763EEDE0068AAE1 /* TerrainProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerrainProtocols.h; sourceTree = "<group>"; };
-		3F53637F1763F7940068AAE1 /* TestSprites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSprites.h; sourceTree = "<group>"; };
-		3F5363801763F7940068AAE1 /* TestSprites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSprites.m; sourceTree = "<group>"; };
 		3F6C28A2176E370C00046BCA /* TerCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerCollisionEvent.h; sourceTree = "<group>"; };
 		3F6C28A3176E370C00046BCA /* TerCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerCollisionEvent.m; sourceTree = "<group>"; };
 		3F75EF36177F3F61000CED26 /* Moon_Sample_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Moon_Sample_Background.png; sourceTree = "<group>"; };
@@ -508,28 +505,18 @@
 		3F5363761763E2E80068AAE1 /* TestScenes */ = {
 			isa = PBXGroup;
 			children = (
-				3F53637E1763F77B0068AAE1 /* Sprites */,
 				3F5363771763E3470068AAE1 /* TerrainTestScene.h */,
 				3F5363781763E3470068AAE1 /* TerrainTestScene.m */,
 				3F53637A1763E3E50068AAE1 /* TestTerrainLayer.h */,
 				3F53637B1763E3E50068AAE1 /* TestTerrainLayer.m */,
-				3F7D1A801777635D00CF6558 /* Earth_Tank.png */,
 			);
 			name = TestScenes;
-			sourceTree = "<group>";
-		};
-		3F53637E1763F77B0068AAE1 /* Sprites */ = {
-			isa = PBXGroup;
-			children = (
-				3F53637F1763F7940068AAE1 /* TestSprites.h */,
-				3F5363801763F7940068AAE1 /* TestSprites.m */,
-			);
-			name = Sprites;
 			sourceTree = "<group>";
 		};
 		3FD1780E176506990059E30E /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				3FF9B257175A899900C71ED8 /* GameConfig.h */,
 				3FF9B258175A899900C71ED8 /* GameLayer.h */,
 				3FF9B259175A899900C71ED8 /* GameLayer.m */,
 				3FF9B255175A899900C71ED8 /* CreditsLayer.h */,
@@ -652,7 +639,6 @@
 				3FF9B25F175A89DB00C71ED8 /* AsyncObject.m */,
 				3FF9B260175A89DB00C71ED8 /* CCMutableTexture2D.h */,
 				3FF9B261175A89DB00C71ED8 /* CCMutableTexture2D.m */,
-				3FF9B257175A899900C71ED8 /* GameConfig.h */,
 				3F5363701763D2280068AAE1 /* DestTerrain.h */,
 				3F5363711763D2280068AAE1 /* DestTerrain.m */,
 				3F5363731763D2760068AAE1 /* DestTerrainSystem.h */,
@@ -1035,6 +1021,7 @@
 		3FF9B3E4175BAC2F00C71ED8 /* AdditionalResources */ = {
 			isa = PBXGroup;
 			children = (
+				3F7D1A801777635D00CF6558 /* Earth_Tank.png */,
 				3F75EF36177F3F61000CED26 /* Moon_Sample_Background.png */,
 				3FF9B3E9175C3FCA00C71ED8 /* alphatest.png */,
 				3FF9B3E5175BB22400C71ED8 /* fullscreenground.png */,
@@ -1158,7 +1145,6 @@
 				3F5363751763D2760068AAE1 /* DestTerrainSystem.m in Sources */,
 				3F5363791763E3470068AAE1 /* TerrainTestScene.m in Sources */,
 				3F53637C1763E3E50068AAE1 /* TestTerrainLayer.m in Sources */,
-				3F5363811763F7940068AAE1 /* TestSprites.m in Sources */,
 				3F6C28A4176E370C00046BCA /* TerCollisionEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

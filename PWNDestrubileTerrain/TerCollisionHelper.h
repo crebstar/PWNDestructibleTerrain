@@ -72,7 +72,6 @@ bool isPointOnLine(LineSegment line, CGPoint pointToCheck) {
      Use cross product to detect if the point is on the line
      */
      
-     
     // Create a new line with startPoint at the origin
     LineSegment lineStartingAtOrigin = createLineSegment(ccp(0,0), ccp(line.endPoint.x - line.startPoint.x,
                                                        line.endPoint.y - line.startPoint.y));

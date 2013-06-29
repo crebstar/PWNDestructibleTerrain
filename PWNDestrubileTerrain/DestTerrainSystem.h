@@ -20,23 +20,24 @@
     
     CGSize levelSize;
     
-    // If YES then it applies texture changes after each draw method
-    // This can be hazardous to performance but convenient if you keep
-    // forgetting to call apply or just want it done automagically
-    BOOL applyAtEachDraw;
-    
+    // Stores altered terrain pieces if applyAfterDraw is NO
+    NSMutableSet * alteredTerrain;
     
 } // end ivars
 
 @property(atomic, strong) NSMutableDictionary * terrainPieces;
 
+// If YES then it applies texture changes after each draw method
+// This can be hazardous to performance but convenient if you keep
+// forgetting to call apply or just want it done automagically
 @property(nonatomic, readwrite) BOOL applyAfterDraw;
-
--(id)initWithGridSystem:(CGSize)levelSize;
 
 -(id)createDestTerrainWithImage:(UIImage*) image withID:(int)terrainID;
 
 -(id)createDestTerrainWithImageName:(NSString *)imageName withID:(int)terrainID;
+
+// If applyAfterDraw is NO, this lets all pixel changes be applied to altered terrain pieces
+-(void)applyTerrainChanges;
 
 // Functions which determine which terrain to apply the effect too then make the appropriate call
 // if a collision is present
